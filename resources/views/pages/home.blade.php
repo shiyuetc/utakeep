@@ -3,6 +3,7 @@
 <div>
     <h1>ホーム画面</h1>
     <p>ようこそ、{{ auth()->user()->name }} さん！</p>
+    <a href="/songs">曲を検索する</a>
     <form method="POST" action="/logout">
         @csrf
         <button type="submit">ログアウト</button>
