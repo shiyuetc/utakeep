@@ -116,8 +116,8 @@ return [
 
     'limiters' => [
         'login' => 'login',
-        'two-factor' => 'two-factor',
-        'passkeys' => 'passkeys',
+        //'two-factor' => 'two-factor',
+        //'passkeys' => 'passkeys',
     ],
 
     /*
@@ -144,11 +144,11 @@ return [
     |
     */
 
-    'passkeys' => [
-        'relying_party_id' => parse_url(config('app.url'), PHP_URL_HOST),
-        'allowed_origins' => [config('app.url')],
-        'timeout' => 60000,
-    ],
+    //'passkeys' => [
+    //    'relying_party_id' => parse_url(config('app.url'), PHP_URL_HOST),
+    //    'allowed_origins' => [config('app.url')],
+    //    'timeout' => 60000,
+    //],
 
     /*
     |--------------------------------------------------------------------------
@@ -167,14 +167,14 @@ return [
         // Features::emailVerification(),
         Features::updateProfileInformation(),
         Features::updatePasswords(),
-        Features::twoFactorAuthentication([
-            'confirm' => true,
-            'confirmPassword' => true,
-            // 'window' => 0,
-        ]),
-        Features::passkeys([
-            'confirmPassword' => true,
-        ]),
+        //Features::twoFactorAuthentication([
+        //    'confirm' => true,
+        //    'confirmPassword' => true,
+        //    'window' => 0,
+        //]),
+        //Features::passkeys([
+        //    'confirmPassword' => true,
+        //]),
     ],
 
 ];
