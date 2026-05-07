@@ -15,12 +15,11 @@
                     <li>
                         {{ $song['title'] }} / {{ $song['artist_name'] }}
 
-                        <select wire:change="updateState({{ $song['id'] }}, $event.target.value)">
-                            <option value="0" {{ ($statuses[$song['id']] ?? 0) === 0 ? 'selected' : '' }}>未設定</option>
-                            <option value="1" {{ ($statuses[$song['id']] ?? 0) === 1 ? 'selected' : '' }}>気になる</option>
-                            <option value="2" {{ ($statuses[$song['id']] ?? 0) === 2 ? 'selected' : '' }}>練習中</option>
-                            <option value="3" {{ ($statuses[$song['id']] ?? 0) === 3 ? 'selected' : '' }}>習得済み</option>
-                        </select>
+                        <livewire:song.state-selector
+                            :songId="$song['id']"
+                            :state="$statuses[$song['id']] ?? 0"
+                            :key="'state-'.$song['id']"
+                        />
                     </li>
                 @endforeach
             </ul>

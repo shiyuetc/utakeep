@@ -48,25 +48,6 @@ class SearchForm extends Component
         $this->searched = true;
     }
 
-    public function updateState(int $songId, int $state): void
-    {
-        $conditions = [
-            'user_id' => Auth::id(),
-            'song_id' => $songId,
-        ];
-
-        if ($state === 0) {
-            Status::where($conditions)->delete();
-        } else {
-            Status::updateOrCreate(
-                $conditions,
-                ['state' => $state]
-            );
-        }
-
-        $this->statuses[$songId] = $state;
-    }
-
     public function render()
     {
         return view('livewire.song.search-form');
