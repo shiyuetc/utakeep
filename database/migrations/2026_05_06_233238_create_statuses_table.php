@@ -21,6 +21,17 @@ return new class extends Migration
             $table->foreign('song_id')->references('id')->on('songs');
             $table->unique(['user_id', 'song_id']);
         });
+
+        Schema::create('activities', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('song_id');
+            $table->unsignedTinyInteger('old_state');
+            $table->unsignedTinyInteger('new_state');
+            $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('song_id')->references('id')->on('songs');
+        });
     }
 
     /**
@@ -29,5 +40,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('statuses');
+        Schema::dropIfExists('activities');
     }
 };

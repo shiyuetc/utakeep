@@ -2,8 +2,10 @@
 
 namespace App\Livewire\Song;
 
+use App\Models\Activity;
 use App\Models\Status;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class StateSelector extends Component
@@ -19,19 +21,28 @@ class StateSelector extends Component
 
     public function updateState(int $state): void
     {
-        $conditions = [
-            'user_id' => Auth::id(),
-            'song_id' => $this->songId,
-        ];
+        DB::transaction(function () use ($state): void {
+            $conditions = [
+                'user_id' => Auth::id(),
+                'song_id' => $this->songId,
+            ];
 
-        if ($state === 0) {
-            Status::where($conditions)->delete();
-        } else {
-            Status::updateOrCreate(
-                $conditions,
-                ['state' => $state]
-            );
-        }
+            if ($state === 0) {
+                Status::where($conditions)->delete();
+            } else {
+                Status::updateOrCreate(
+                    $conditions,
+                    ['state' => $state]
+                );
+            }
+
+            Activity::create([
+                'user_id' => Auth::id(),
+                'song_id' => $this->songId,
+                'old_state' => $this->state,
+                'new_state' => $state,
+            ]);
+        });
 
         $this->state = $state;
     }
