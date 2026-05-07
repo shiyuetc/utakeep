@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-3">
-    <div class="bg-white border border-gray-200 rounded-lg shadow-md p-5">
+    <div class="bg-white border border-gray-200 shadow-sm rounded-lg p-4">
     <div class="flex items-center gap-3">
         <div class="w-12 h-12 rounded-full bg-purple-100 text-primary flex items-center justify-center text-lg font-medium flex-shrink-0">
             {{ strtoupper(substr(auth()->user()->screen_name, 0, 2)) }}
@@ -10,12 +10,12 @@
         </div>
     </div>
 </div>
-    <div class="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden">
+    <div class="bg-white border border-gray-200 shadow-sm rounded-lg overflow-hidden">
         <a href="/" class="flex items-center gap-2.5 px-4 py-2.5 text-sm border-b border-gray-200 transition
                   {{ request()->routeIs('home') ? 'text-primary bg-primary-light font-medium' : 'text-gray-500 hover:bg-gray-50' }}">
             <i class="ti ti-home text-base" aria-hidden="true"></i>ホーム
         </a>
-        <a href="/songs" class="flex items-center gap-2.5 px-4 py-2.5 text-sm border-b border-gray-200 transition
+        <a href="/songs" class="flex items-center gap-2.5 px-4 py-2.5 text-sm transition
                   {{ request()->routeIs('songs') ? 'text-primary bg-primary-light font-medium' : 'text-gray-500 hover:bg-gray-50' }}">
             <i class="ti ti-search text-base" aria-hidden="true"></i>曲を検索
         </a>
