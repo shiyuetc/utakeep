@@ -11,4 +11,4 @@ Route::get('/', function () {
 
 Route::get('/songs', function () {
     return view('pages.song.index');
-})->middleware('auth');
+})->name('songs')->middleware('auth');
