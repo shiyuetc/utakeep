@@ -11,7 +11,7 @@
                 <aside class="w-64 flex-shrink-0">
                     @include('layouts.partials.sidebar')
                 </aside>
-                <section class="min-w-0">
+                <section class="flex-1 min-w-0">
                     @yield('content')
                 </section>
             </div>
