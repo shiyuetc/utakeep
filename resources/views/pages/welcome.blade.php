@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.guest')
 @section('header-nav')
 <div class="flex gap-2">
     <a href="{{ route('login') }}" class="px-4 py-1.5 text-sm text-gray-700 hover:bg-gray-50 transition">ログイン</a>
