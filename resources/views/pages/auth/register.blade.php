@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.guest')
 @section('content')
 <div class="flex justify-center py-8">
     <div class="w-full max-w-md bg-white border border-gray-200 p-8">
