@@ -16,7 +16,8 @@
                     placeholder="英数字・アンダースコアのみ、15文字以内"
                     value="{{ old('screen_name') }}"
                     class="w-full h-9 px-3 text-sm border border-gray-200 bg-white text-gray-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
-                    required>
+                    required
+                    maxlength="15">
                 @error('screen_name')
                     <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                 @enderror
@@ -29,7 +30,8 @@
                     placeholder="20文字以内"
                     value="{{ old('name') }}"
                     class="w-full h-9 px-3 text-sm border border-gray-200 bg-white text-gray-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
-                    required>
+                    required
+                    maxlength="20">
                 @error('name')
                     <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                 @enderror
@@ -54,7 +56,8 @@
                     name="password"
                     placeholder="8文字以上"
                     class="w-full h-9 px-3 text-sm border border-gray-200 bg-white text-gray-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
-                    required>
+                    required
+                    minlength="8">
                 @error('password')
                     <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                 @enderror
@@ -65,7 +68,8 @@
                     type="password"
                     name="password_confirmation"
                     class="w-full h-9 px-3 text-sm border border-gray-200 bg-white text-gray-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
-                    required>
+                    required
+                    minlength="8">
                 @error('password_confirmation')
                     <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                 @enderror
