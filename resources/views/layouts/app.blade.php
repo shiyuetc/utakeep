@@ -20,7 +20,7 @@
         @endif
         @livewireStyles
     </head>
-    <body class="bg-white text-gray-900 antialiased">
+    <body class="bg-white text-gray-900 antialiased min-h-screen flex flex-col">
         <header class="sticky top-0 z-50 bg-white border-b border-gray-100">
             <div class="max-w-5xl mx-auto px-8 h-14 flex items-center justify-between">
                 <div class="text-lg font-medium tracking-tight text-gray-900">
@@ -29,8 +29,12 @@
                 @yield('header-nav')
             </div>
         </header>
-        @yield('content')
- 
+        <main class="flex-1">
+            @yield('content')
+        </main>
         @livewireScripts
+        <footer class="bg-white border-t border-gray-100 py-6 text-center text-xs text-gray-400">
+            © 2026 Utakeep
+        </footer>
     </body>
 </html>
