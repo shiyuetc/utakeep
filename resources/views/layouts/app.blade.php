@@ -4,7 +4,7 @@
         @include('layouts.partials.head')
         @livewireStyles
     </head>
-    <body class="bg-white text-gray-900 antialiased min-h-screen flex flex-col">
+    <body class="bg-gray-50 text-gray-900 antialiased min-h-screen flex flex-col">
         @include('layouts.partials.header')
         <main class="flex-1">
             @yield('content')
