@@ -12,7 +12,7 @@
             @else
                 @if (Request::is('/'))
                     <a href="{{ route('login') }}" class="px-4 py-1.5 text-sm text-gray-700 hover:bg-gray-50 transition">ログイン</a>
-                    <a href="{{ route('register') }}" class="px-4 py-1.5 text-sm bg-primary text-primary-light hover:bg-primary-hover transition">新規登録</a>
+                    <a href="{{ route('register') }}" class="px-4 py-1.5 text-sm bg-primary rounded-md text-primary-light hover:bg-primary-hover transition">新規登録</a>
                 @endif
             @endauth
         </div>

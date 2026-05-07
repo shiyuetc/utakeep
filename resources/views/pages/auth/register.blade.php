@@ -1,7 +1,7 @@
 @extends('layouts.guest')
 @section('content')
 <div class="flex justify-center py-8">
-    <div class="w-full max-w-md bg-white border border-gray-200 shadow-md p-8">
+    <div class="w-full max-w-md bg-white border border-gray-200 rounded-lg shadow-md p-8">
         <div class="text-center text-xl font-medium mb-6">
             Uta<span class="text-primary">keep</span>
         </div>
@@ -15,7 +15,7 @@
                     name="screen_name"
                     placeholder="英数字・アンダースコアのみ、15文字以内"
                     value="{{ old('screen_name') }}"
-                    class="w-full h-9 px-3 text-sm border border-gray-200 bg-white text-gray-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
+                    class="w-full h-9 px-3 text-sm border border-gray-200 rounded-md bg-white text-gray-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
                     required
                     maxlength="15">
                 @error('screen_name')
@@ -29,7 +29,7 @@
                     name="name"
                     placeholder="20文字以内"
                     value="{{ old('name') }}"
-                    class="w-full h-9 px-3 text-sm border border-gray-200 bg-white text-gray-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
+                    class="w-full h-9 px-3 text-sm border border-gray-200 rounded-md bg-white text-gray-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
                     required
                     maxlength="20">
                 @error('name')
@@ -43,7 +43,7 @@
                     name="email"
                     placeholder="sample@example.com"
                     value="{{ old('email') }}"
-                    class="w-full h-9 px-3 text-sm border border-gray-200 bg-white text-gray-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
+                    class="w-full h-9 px-3 text-sm border border-gray-200 rounded-md bg-white text-gray-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
                     required>
                 @error('email')
                     <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
@@ -55,7 +55,7 @@
                     type="password"
                     name="password"
                     placeholder="8文字以上"
-                    class="w-full h-9 px-3 text-sm border border-gray-200 bg-white text-gray-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
+                    class="w-full h-9 px-3 text-sm border border-gray-200 rounded-md bg-white text-gray-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
                     required
                     minlength="8">
                 @error('password')
@@ -67,14 +67,14 @@
                 <input
                     type="password"
                     name="password_confirmation"
-                    class="w-full h-9 px-3 text-sm border border-gray-200 bg-white text-gray-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
+                    class="w-full h-9 px-3 text-sm border border-gray-200 rounded-md bg-white text-gray-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
                     required
                     minlength="8">
                 @error('password_confirmation')
                     <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                 @enderror
             </div>
-            <button type="submit" class="w-full h-9 mt-2 bg-primary text-primary-light text-sm font-medium hover:bg-primary-hover transition cursor-pointer">新規登録</button>
+            <button type="submit" class="w-full h-9 mt-2 bg-primary text-primary-light text-sm font-medium hover:bg-primary-hover rounded-md transition cursor-pointer">新規登録</button>
         </form>
         <div class="mt-5 text-center text-sm text-gray-600">
             または
