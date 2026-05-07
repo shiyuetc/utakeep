@@ -20,7 +20,15 @@
         @endif
         @livewireStyles
     </head>
-    <body>
+    <body class="bg-white text-gray-900 antialiased">
+        <header class="sticky top-0 z-50 bg-white border-b border-gray-100">
+            <div class="max-w-5xl mx-auto px-8 h-14 flex items-center justify-between">
+                <div class="text-lg font-medium tracking-tight text-gray-900">
+                    <a href="/">Uta<span class="text-[#534AB7]">keep</span></a>
+                </div>
+                @yield('header-nav')
+            </div>
+        </header>
         @yield('content')
  
         @livewireScripts
