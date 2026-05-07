@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
-<div>
-    <h1>曲検索画面</h1>
+<div class="bg-white border border-gray-200 rounded-lg shadow-md p-4">
+    <h2 class="text-sm font-medium text-gray-900 mb-4">曲を検索</h2>
     <livewire:song.search-form />
 </div>
 @endsection
