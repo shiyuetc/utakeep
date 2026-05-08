@@ -8,8 +8,18 @@ $colorClass = match($state ?? 0) {
 @endphp
 
 <div class="flex items-center gap-2.5 bg-gray-50 border border-gray-200 rounded-sm px-3 py-2.5">
-    <div class="w-11 h-11 rounded bg-gray-200 items-center justify-center flex-shrink-0 overflow-hidden">
-        <img src="{{ $song->image_url }}" class="w-full h-full object-cover">
+    <div class="relative w-11 h-11 rounded bg-gray-200 flex items-center justify-center flex-shrink-0 overflow-hidden">
+        @if ($song->image_url)
+            <img src="{{ $song->image_url }}" alt="{{ $song->title }}" class="w-full h-full object-cover">
+        @else
+            <i class="ti ti-music text-gray-300 text-lg" aria-hidden="true"></i>
+        @endif
+
+        @if ($song->audio_url)
+            <div class="mediPlayer absolute inset-0 flex items-center justify-center bg-black/20 transition hover:bg-black/30 cursor-pointer">
+                <audio src="{{ $song->audio_url }}" data-size="40"></audio>
+            </div>
+        @endif
     </div>
     <div class="flex-1 min-w-0">
         <div class="text-sm font-medium text-gray-900 truncate">{{ $song->title }}</div>
