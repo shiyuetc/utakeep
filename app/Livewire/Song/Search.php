@@ -8,7 +8,7 @@ use App\Services\ItunesSearchService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-class SearchForm extends Component
+class Search extends Component
 {
     public string $term = '';
     public $songs = [];
@@ -49,6 +49,6 @@ class SearchForm extends Component
 
     public function render()
     {
-        return view('livewire.song.search-form');
+        return view('livewire.song.search');
     }
 }
