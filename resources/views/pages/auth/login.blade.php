@@ -1,4 +1,5 @@
 @extends('layouts.guest')
+@section('page-title', 'ログイン')
 @section('content')
 <div class="flex justify-center py-8">
     <div class="w-full max-w-md bg-white border border-gray-200 rounded-sm p-8">
