@@ -1,5 +1,5 @@
 <nav class="fixed bottom-0 left-0 right-0 z-40 md:hidden border-t border-gray-200 bg-white">
-    <div class="grid grid-cols-2">
+    <div class="grid grid-cols-3">
         <a href="/" class="flex flex-col items-center justify-center gap-0.5 py-2.5 text-xs transition
                   {{ request()->routeIs('home') ? 'text-primary font-medium' : 'text-gray-400' }}">
             <i class="ti ti-home text-xl" aria-hidden="true"></i>
@@ -8,7 +8,12 @@
         <a href="/songs" class="flex flex-col items-center justify-center gap-0.5 py-2.5 text-xs transition
                   {{ request()->routeIs('songs') ? 'text-primary font-medium' : 'text-gray-400' }}">
             <i class="ti ti-search text-xl" aria-hidden="true"></i>
-            <span>曲を検索</span>
+            <span>曲検索</span>
+        </a>
+        <a href="{{ route('users.index') }}" class="flex flex-col items-center justify-center gap-0.5 py-2.5 text-xs transition
+                  {{ request()->routeIs('users.index') ? 'text-primary font-medium' : 'text-gray-400' }}">
+            <i class="ti ti-users text-xl" aria-hidden="true"></i>
+            <span>ユーザー検索</span>
         </a>
     </div>
 </nav>
