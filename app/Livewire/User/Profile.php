@@ -31,6 +31,7 @@ class Profile extends Component
     #[On('status-updated')]
     public function refreshStatuses(): void
     {
+        $this->user->refresh();
     }
 
     public function stateLabel(int $state): string
@@ -45,13 +46,11 @@ class Profile extends Component
 
     public function render(): View
     {
-        $counts = Status::query()
-            ->where('user_id', $this->user->id)
-            ->whereIn('state', [1, 2, 3])
-            ->selectRaw('state, count(*) as total')
-            ->groupBy('state')
-            ->pluck('total', 'state')
-            ->all();
+        $counts = [
+            1 => $this->user->status1_count,
+            2 => $this->user->status2_count,
+            3 => $this->user->status3_count,
+        ];
 
         $statuses = Status::query()
             ->with('song')

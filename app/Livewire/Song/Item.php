@@ -8,6 +8,7 @@ use App\Models\Status;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 
 class Item extends Component
@@ -23,14 +24,40 @@ class Item extends Component
 
     public function updateState($state): void
     {
-        DB::transaction(function () use ($state): void {
+        $validated = Validator::make(
+            ['state' => $state],
+            ['state' => ['required', 'integer', 'in:0,1,2,3']]
+        )->validate();
+
+        $state = (int) $validated['state'];
+
+        [$newState, $changed] = DB::transaction(function () use ($state): array {
+            $userId = Auth::id();
+
+            if (! $userId) {
+                return [$this->state, false];
+            }
+
+            $user = User::whereKey($userId)->lockForUpdate()->first();
+
+            if (! $user) {
+                return [$this->state, false];
+            }
+
             $conditions = [
-                'user_id' => Auth::id(),
+                'user_id' => $userId,
                 'song_id' => $this->song->id,
             ];
 
+            $currentStatus = Status::where($conditions)->lockForUpdate()->first();
+            $oldState = $currentStatus?->state ?? 0;
+
+            if ($oldState === $state) {
+                return [$oldState, false];
+            }
+
             if ($state === 0) {
-                Status::where($conditions)->delete();
+                $currentStatus?->delete();
             } else {
                 Status::updateOrCreate(
                     $conditions,
@@ -39,15 +66,32 @@ class Item extends Component
             }
 
             Activity::create([
-                'user_id' => Auth::id(),
+                'user_id' => $userId,
                 'song_id' => $this->song->id,
-                'old_state' => $this->state,
+                'old_state' => $oldState,
                 'new_state' => $state,
             ]);
+
+            $user->activity_count++;
+
+            if ($oldState > 0 ) {
+                $user->{"status{$oldState}_count"}--;
+            }
+
+            if ($state > 0 ) {
+                $user->{"status{$state}_count"}++;
+            }
+
+            $user->save();
+
+            return [$state, true];
         });
 
-        $this->state = $state;
-        $this->dispatch('status-updated');
+        $this->state = $newState;
+
+        if ($changed) {
+            $this->dispatch('status-updated');
+        }
     }
 
     public function render()
