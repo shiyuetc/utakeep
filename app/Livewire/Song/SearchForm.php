@@ -11,7 +11,7 @@ use Livewire\Component;
 class SearchForm extends Component
 {
     public string $term = '';
-    public array $songs = [];
+    public $songs = [];
     public array $statuses = [];
     public bool $searched = false;
 
@@ -36,10 +36,9 @@ class SearchForm extends Component
 
         $this->songs = Song::where('title', 'like', "%{$this->term}%")
             ->orWhere('artist_name', 'like', "%{$this->term}%")
-            ->get()
-            ->toArray();
+            ->get();
 
-        $songIds = array_column($this->songs, 'id');
+        $songIds = $this->songs->pluck('id')->all();
         $this->statuses = Status::where('user_id', Auth::id())
             ->whereIn('song_id', $songIds)
             ->pluck('state', 'song_id')

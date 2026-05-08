@@ -17,24 +17,11 @@
             <p class="text-xs text-gray-600 mb-3">{{ count($songs) }}件ヒットしました</p>
             <div class="flex flex-col gap-2">
                 @foreach ($songs as $song)
-                <div class="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-sm px-4 py-3">
-                    <div class="w-11 h-11 border border-gray-200 rounded-sm bg-gray-100 flex items-center justify-center flex-shrink-0 overflow-hidden">
-                        @if ($song['image_url'])
-                            <img src="{{ $song['image_url'] }}" alt="{{ $song['title'] }}" class="w-full h-full object-cover">
-                        @else
-                            <i class="ti ti-music text-gray-300 text-lg" aria-hidden="true"></i>
-                        @endif
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <div class="text-sm font-medium text-gray-900 truncate">{{ $song['title'] }}</div>
-                        <div class="text-xs text-gray-600 truncate mt-0.5">{{ $song['artist_name'] }}</div>
-                    </div>
-                    <livewire:song.state-selector
-                        :songId="$song['id']"
-                        :state="$statuses[$song['id']] ?? 0"
-                        :key="'search-'.$song['id']"
+                    <livewire:song.item
+                        :song="$song"
+                        :state="$statuses[$song->id] ?? 0"
+                        :key="'search-'.$song->id"
                     />
-                </div>
                 @endforeach
             </div>
         @else

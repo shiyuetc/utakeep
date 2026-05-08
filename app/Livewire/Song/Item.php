@@ -3,28 +3,30 @@
 namespace App\Livewire\Song;
 
 use App\Models\Activity;
+use App\Models\Song;
 use App\Models\Status;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
-class StateSelector extends Component
+class Item extends Component
 {
-    public int $songId;
+    public Song $song;
     public int $state = 0;
 
-    public function mount(int $songId, int $state = 0): void
+    public function mount(Song $song, int $state = 0): void
     {
-        $this->songId = $songId;
+        $this->song = $song;
         $this->state = $state;
     }
 
-    public function updateState(int $state): void
+    public function updateState($state): void
     {
         DB::transaction(function () use ($state): void {
             $conditions = [
                 'user_id' => Auth::id(),
-                'song_id' => $this->songId,
+                'song_id' => $this->song->id,
             ];
 
             if ($state === 0) {
@@ -38,7 +40,7 @@ class StateSelector extends Component
 
             Activity::create([
                 'user_id' => Auth::id(),
-                'song_id' => $this->songId,
+                'song_id' => $this->song->id,
                 'old_state' => $this->state,
                 'new_state' => $state,
             ]);
@@ -49,6 +51,6 @@ class StateSelector extends Component
 
     public function render()
     {
-        return view('livewire.song.state-selector');
+        return view('livewire.song.item');
     }
 }
