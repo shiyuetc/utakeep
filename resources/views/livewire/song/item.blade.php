@@ -16,7 +16,7 @@ $colorClass = match($state ?? 0) {
         @endif
 
         @if ($song->audio_url)
-            <div class="mediPlayer absolute inset-0 flex items-center justify-center bg-black/20 transition hover:bg-black/30 cursor-pointer">
+            <div wire:ignore class="mediPlayer absolute inset-0 flex items-center justify-center bg-black/20 transition hover:bg-black/30 cursor-pointer">
                 <audio src="{{ $song->audio_url }}" data-size="40"></audio>
             </div>
         @endif
