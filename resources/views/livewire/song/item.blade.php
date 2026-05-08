@@ -7,7 +7,7 @@ $colorClass = match($state ?? 0) {
 };
 @endphp
 
-<div class="flex items-center gap-2.5 bg-gray-50 border border-gray-200 rounded-sm px-3 py-2.5">
+<div class="flex items-center gap-2.5 px-3 py-2.5">
     <div class="relative w-11 h-11 rounded bg-gray-200 flex items-center justify-center flex-shrink-0 overflow-hidden">
         @if ($song->image_url)
             <img src="{{ $song->image_url }}" alt="{{ $song->title }}" class="w-full h-full object-cover">

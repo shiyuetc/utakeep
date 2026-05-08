@@ -17,11 +17,13 @@
                         <div class="text-xs text-gray-400 flex-shrink-0">{{ $this->timeLabel($activity->created_at) }}</div>
                     </div>
                     <p class="text-sm text-gray-700 mb-2">ステータスを{{ $this->stateLabel($activity->new_state) }}に変更しました</p>
-                    <livewire:song.item
-                        :song="$activity->song"
-                        :state="$statuses[$activity->song_id] ?? 0"
-                        :key="'timeline-'.$activity->id.'-'.$activity->song_id.'-'.($statuses[$activity->song_id] ?? 0)"
-                    />
+                    <div class="bg-gray-50 border border-gray-200 rounded-sm">
+                        <livewire:song.item
+                            :song="$activity->song"
+                            :state="$statuses[$activity->song_id] ?? 0"
+                            :key="'timeline-'.$activity->id.'-'.$activity->song_id.'-'.($statuses[$activity->song_id] ?? 0)"
+                        />
+                    </div>
                 </div>
             @endforeach
         </div>

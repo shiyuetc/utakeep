@@ -1,5 +1,5 @@
 <div>
-    <form wire:submit="search" class="flex gap-2 mb-4">
+    <form wire:submit="search" class="flex gap-2 m-4">
         <input
             type="text"
             wire:model="term"
@@ -14,14 +14,14 @@
     </form>
     @if ($searched)
         @if (count($songs) > 0)
-            <p class="text-xs text-gray-600 mb-3">{{ count($songs) }}件ヒットしました</p>
-            <div class="flex flex-col gap-2">
+            <p class="text-xs text-gray-600 m-4">{{ count($songs) }}件ヒットしました</p>
+            <div class="border-t border-gray-200 divide-y divide-gray-200">
                 @foreach ($songs as $song)
-                    <livewire:song.item
-                        :song="$song"
-                        :state="$statuses[$song->id] ?? 0"
-                        :key="'search-'.$song->id"
-                    />
+                        <livewire:song.item
+                            :song="$song"
+                            :state="$statuses[$song->id] ?? 0"
+                            :key="'search-'.$song->id"
+                        />
                 @endforeach
             </div>
         @else
