@@ -1,229 +1,129 @@
-/**
- * author : İlker YILMAZ
- * url : https://github.com/kuantal/Multiple-circular-player
- * inspired by https://github.com/frumbert/circular-player
- */
-(function (root, factory) {
+const circumference = 298.1371428256714;
 
-    if (typeof define === 'function' && define.amd) {
-        define(factory);
-    } else if (typeof exports === 'object') {
-        module.exports = factory;
-    } else {
-        root.lunar = factory();
+const playerTemplate = (size) => `
+    <svg viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" data-play class="not-started playable">
+        <g class="shape">
+            <circle class="progress-track" cx="50" cy="50" r="47.45" stroke="#ffffff" stroke-opacity="0.5" stroke-linecap="round" fill="none" stroke-width="5"/>
+            <circle class="precache-bar" cx="50" cy="50" r="47.45" stroke="#ffffff" stroke-opacity="0.35" stroke-linecap="round" fill="none" stroke-width="5" transform="rotate(-90 50 50)"/>
+            <circle class="progress-bar" cx="50" cy="50" r="47.45" stroke="#534AB7" stroke-opacity="1" stroke-linecap="round" fill="none" stroke-width="5" transform="rotate(-90 50 50)"/>
+        </g>
+        <circle class="controls" cx="50" cy="50" r="45" stroke="none" fill="#000000" opacity="0" pointer-events="all"/>
+        <g class="control pause">
+            <line x1="40" y1="35" x2="40" y2="65" stroke="#ffffff" fill="none" stroke-width="8" stroke-linecap="round"/>
+            <line x1="60" y1="35" x2="60" y2="65" stroke="#ffffff" fill="none" stroke-width="8" stroke-linecap="round"/>
+        </g>
+        <g class="control play">
+            <polygon points="43,34 67,50 43,66" fill="#ffffff" stroke-width="0"></polygon>
+        </g>
+    </svg>
+`;
+
+const setCircleValue = (circle, value, duration) => {
+    if (!circle || !duration) {
+        return;
     }
-})(this, function () {
 
-    'use strict';
+    const offset = circumference - ((value / duration) * circumference);
+    circle.style.strokeDashoffset = offset;
+};
 
-    var lunar = {};
+const stopOtherPlayers = (currentAudio) => {
+    document.querySelectorAll('.mediPlayer audio').forEach((audio) => {
+        if (audio !== currentAudio) {
+            audio.pause();
+            audio.currentTime = 0;
 
-    lunar.hasClass = function (elem, name) {
-        return new RegExp('(\\s|^)' + name + '(\\s|$)').test(elem.attr('class'));
-    };
+            const player = audio.closest('.mediPlayer');
+            player?.querySelector('[data-play]')?.setAttribute('class', 'not-started playable');
+            setCircleValue(player?.querySelector('.progress-bar'), 0, 1);
+        }
+    });
+};
 
-    lunar.addClass = function (elem, name) {
-        !lunar.hasClass(elem, name) && elem.attr('class', (!!elem.getAttribute('class') ? elem.getAttribute('class') + ' ' : '') + name);
-    };
+const initPlayer = (player) => {
+    if (player.dataset.playerReady === 'true') {
+        return;
+    }
 
-    lunar.removeClass = function (elem, name) {
-        var remove = elem.attr('class').replace(new RegExp('(\\s|^)' + name + '(\\s|$)', 'g'), '$2');
-        lunar.hasClass(elem, name) && elem.attr('class', remove);
-    };
+    const audio = player.querySelector('audio');
+    if (!audio) {
+        return;
+    }
 
-    lunar.toggleClass = function (elem, name) {
-        lunar[lunar.hasClass(elem, name) ? 'removeClass' : 'addClass'](elem, name);
-    };
+    player.dataset.playerReady = 'true';
+    audio.volume = Number(player.dataset.volume ?? 0.15);
+    audio.preload = 'metadata';
 
-    lunar.className = function (elem, name) {
-        elem.attr('class', name);
-        console.log('className', elem);
-    };
+    const size = audio.dataset.size || player.dataset.size || 34;
+    player.insertAdjacentHTML('beforeend', playerTemplate(size));
 
-    return lunar;
+    const svg = player.querySelector('[data-play]');
+    const controls = player.querySelector('.controls');
+    const progress = player.querySelector('.progress-bar');
+    const precache = player.querySelector('.precache-bar');
 
-});
+    controls?.addEventListener('click', () => {
+        if (audio.paused) {
+            stopOtherPlayers(audio);
 
-(function ($) {
+            audio.play()
+                .then(() => {
+                    svg?.setAttribute('class', 'playable playing');
+                })
+                .catch(() => {
+                    svg?.setAttribute('class', 'not-started playable');
+                });
 
-    var _ = {
+            return;
+        }
 
-        cursorPoint: function (evt, el) {
-            _.settings.pt.x = evt.clientX;
-            _.settings.pt.y = evt.clientY;
-            var playObject  = el.find('svg').attr('id');
-            playObject      = document.getElementById(playObject);
-            return _.settings.pt.matrixTransform(playObject.getScreenCTM().inverse());
-        },
+        audio.pause();
+        audio.currentTime = 0;
+        svg?.setAttribute('class', 'not-started playable');
+        setCircleValue(progress, 0, 1);
+    });
 
-        angle: function (ex, ey) {
-            var dy    = ey - 50; // 100;
-            var dx    = ex - 50; // 100;
-            var theta = Math.atan2(dy, dx); // range (-PI, PI]
-            theta *= 180 / Math.PI; // rads to degs, range (-180, 180]
-            theta     = theta + 90; // in our case we are animating from the top, so we offset by the rotation value;
-            if (theta < 0) theta = 360 + theta; // range [0, 360)
-            return theta;
-        },
+    audio.addEventListener('timeupdate', () => {
+        setCircleValue(progress, audio.currentTime, audio.duration);
+    });
 
-        setGraphValue: function (obj, val, el) {
+    audio.addEventListener('progress', () => {
+        if (audio.buffered.length === 0) {
+            return;
+        }
 
-            var audioObj = el.find(_.settings.audioObj),
-                pc       = _.settings.pc,
-                dash     = pc - parseFloat(((val / audioObj[0].duration) * pc), 10);
+        setCircleValue(precache, audio.buffered.end(audio.buffered.length - 1), audio.duration);
+    });
 
-            $(obj).css('strokeDashoffset', dash);
+    audio.addEventListener('ended', () => {
+        svg?.setAttribute('class', 'ended playable');
+        setCircleValue(progress, 0, 1);
+    });
+};
 
-            if (val === 0) {
-                $(obj).addClass(obj, 'done');
-                if (obj === $(_.settings.progress)) $(obj).attr('class', 'ended');
+const initPlayers = (root = document) => {
+    root.querySelectorAll?.('.mediPlayer').forEach(initPlayer);
+};
+
+document.addEventListener('DOMContentLoaded', () => initPlayers());
+document.addEventListener('livewire:navigated', () => initPlayers());
+
+new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+            if (node.nodeType !== Node.ELEMENT_NODE) {
+                return;
             }
-        },
 
-        reportPosition: function (el, audioId) {
-            var progress = el.find(_.settings.progress),
-                audio    = el.find(_.settings.audioObj);
+            if (node.matches?.('.mediPlayer')) {
+                initPlayer(node);
+                return;
+            }
 
-            _.setGraphValue(progress, audioId.currentTime, el);
-        },
-
-        stopAllSounds: function () {
-
-            document.addEventListener('play', function (e) {
-                var audios = document.getElementsByTagName('audio');
-                for (var i = 0, len = audios.length; i < len; i++) {
-                    if (audios[i] != e.target) {
-                        audios[i].pause();
-                    }
-                    if (audios[i] != e.target) $(audios[i]).parent('div').find('.playing').attr('class', 'paused');
-                }
-            }, true);
-        },
-
-        settings: {},
-
-        /**
-         * Main Function for plugin
-         * @param options
-         */
-        init: function (options) {
-
-            /**
-             * Default Options
-             */
-
-            var template = ['<svg viewBox="0 0 100 100" id="playable" version="1.1" xmlns="http://www.w3.org/2000/svg" width="34" height="34" data-play="playable" class="not-started playable">',
-                '<g class="shape">',
-                '<circle class="progress-track" cx="50" cy="50" r="47.45" stroke="#becce1" stroke-opacity="0.25" stroke-linecap="round" fill="none" stroke-width="5"/>',
-                '<circle class="precache-bar" cx="50" cy="50" r="47.45" stroke="#302F32" stroke-opacity="0.25" stroke-linecap="round" fill="none" stroke-width="5" transform="rotate(-90 50 50)"/>',
-                '<circle class="progress-bar" cx="50" cy="50" r="47.45" stroke="#009EF8" stroke-opacity="1" stroke-linecap="round" fill="none" stroke-width="5" transform="rotate(-90 50 50)"/>',
-                '</g>',
-                '<circle class="controls" cx="50" cy="50" r="45" stroke="none" fill="#000000" opacity="0.0" pointer-events="all"/>',
-                '<g class="control pause">',
-                '<line x1="40" y1="35" x2="40" y2="65" stroke="#000000" fill="none" stroke-width="8" stroke-linecap="round"/>',
-                '<line x1="60" y1="35" x2="60" y2="65" stroke="#000000" fill="none" stroke-width="8" stroke-linecap="round"/>',
-                '</g>',
-                '<g class="control play">',
-                '<polygon points="45,35 65,50 45,65" fill="#009EF8" stroke-width="0"></polygon>',
-                '</g>',
-                '<g class="control stop">',
-                '<rect x="35" y="35" width="30" height="30" stroke="#000000" fill="none" stroke-width="1"/>',
-                '</g>',
-                '</svg>'];
-
-            template = template.join(' ');
-
-            $.each(this, function (a, b) {
-                
-                var audio = $(this).find('audio');
-                audio.attr('id', 'audio' + a);
-                template = template.replace('width="34"','width="'+ audio.data('size')  +'"');
-                template = template.replace('height="34"','height="'+ audio.data('size')  +'"');
-                template = template.replace('id="playable"', 'id="playable' + a + '"');
-                $(this).append(template);
-                
-            });
-
-            var svgId = $(this).find('svg').attr('id');
-            svgId     = document.getElementById(svgId);
-
-            _.defaults = {
-                this        : this,
-                thisSelector: this.selector.toString(),
-                playObj     : 'playable',
-                progress    : '.progress-bar',
-                precache    : '.precache-bar',
-                audioObj    : 'audio',
-                controlsObj : '.controls',
-                pt          : svgId.createSVGPoint(),
-                pc          : 298.1371428256714 // 2 pi r                                
-            };
-
-            lunar = {};
-
-            _.settings = $.extend({}, _.defaults, options);
-
-            $(_.settings.controlsObj).on('click', function (e) {
-
-                var el = $(e.currentTarget).closest($(_.settings.thisSelector));
-
-                var obj = {
-                    el         : el,
-                    activeAudio: el.find(_.settings.audioObj),
-                    playObj    : el.find('[data-play]'),
-                    precache   : el.find(_.settings.precache)
-                };
-
-                obj.class = obj.playObj.attr('class');
-                switch (obj.class.replace('playable', '').trim()) {
-
-                    case 'not-started':
-                        _.stopAllSounds();
-                        obj.activeAudio[0].play();
-                        var audioId = document.getElementById(obj.activeAudio.attr('id'));
-                        audioId.addEventListener('timeupdate', function (e) {
-                            _.reportPosition(el, audioId)
-                        });
-                        obj.playObj.attr('class', 'playing');
-                        break;
-                    case 'playing':
-                        obj.playObj.attr('class', 'playable paused');
-                        obj.activeAudio[0].pause();
-                        $(audioId).off('timeupdate');
-                        break;
-                    case 'paused':
-                        obj.playObj.attr('class', 'playable playing');
-                        obj.activeAudio[0].play();
-                        break;
-                    case 'ended':
-                        obj.playObj.attr('class', 'not-started playable');
-                        obj.activeAudio.off('timeupdate', _.reportPosition);
-                        break;
-                }
-            });
-
-            $(_.defaults.audioObj).on('progress', function (e) {
-                if (this.buffered.length > 0) {
-                    var end = this.buffered.end(this.buffered.length - 1);
-                    var cache = $(e.currentTarget).parent().find(_.settings.precache),
-                        el    = $(this).closest($(_.settings.thisSelector));
-                    _.setGraphValue(cache, end, el);
-                }
-            });
-
-        }
-
-    };
-
-    // Add Plugin to Jquery
-    $.fn.mediaPlayer = function (methodOrOptions) {
-        if (_[methodOrOptions]) {
-            return _[methodOrOptions].apply(this, Array.prototype.slice.call(arguments, 1));
-        } else if (typeof methodOrOptions === 'object' || !methodOrOptions) {
-            // Default to "init"
-            return _.init.apply(this, arguments);
-        } else {
-            $.error('Method ' + methodOrOptions + ' does not exist on jQuery.mediaPlayer');
-        }
-    };
-})(jQuery);
+            initPlayers(node);
+        });
+    });
+}).observe(document.documentElement, {
+    childList: true,
+    subtree: true,
+});

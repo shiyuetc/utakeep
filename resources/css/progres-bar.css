@@ -1,16 +1,8 @@
 
-*,
-*:after,
-*:before {
-    box-sizing             : border-box;
-    -webkit-box-sizing     : border-box;
-    -moz-box-sizing        : border-box;
-    -webkit-font-smoothing : antialiased;
-    -moz-font-smoothing    : antialiased;
-    -o-font-smoothing      : antialiased;
-    font-smoothing         : antialiased;
-    text-rendering         : optimizeLegibility;
-
+.mediPlayer,
+.mediPlayer:after,
+.mediPlayer:before {
+    box-sizing: border-box;
 }
 
 .mediPlayer .control {
@@ -56,4 +48,8 @@
 
     stroke-dasharray  : 298.1371428256714;
     stroke-dashoffset : 298.1371428256714;
+}
+
+.mediPlayer audio {
+    display: none;
 }
