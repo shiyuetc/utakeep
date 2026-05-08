@@ -47,6 +47,7 @@ class Item extends Component
         });
 
         $this->state = $state;
+        $this->dispatch('status-updated');
     }
 
     public function render()
