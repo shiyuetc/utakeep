@@ -2,6 +2,7 @@
 
 namespace App\Livewire\User;
 
+use App\Models\Activity;
 use App\Models\Status;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
@@ -12,7 +13,7 @@ use Livewire\Component;
 class Profile extends Component
 {
     public User $user;
-    public int $activeState = 1;
+    public int $activeState = 0;
 
     public function mount(User $user): void
     {
@@ -21,7 +22,7 @@ class Profile extends Component
 
     public function setActiveState(int $state): void
     {
-        if (! in_array($state, [1, 2, 3], true)) {
+        if (! in_array($state, [0, 1, 2, 3], true)) {
             return;
         }
 
@@ -37,6 +38,7 @@ class Profile extends Component
     public function stateLabel(int $state): string
     {
         return match ($state) {
+            0 => '記録',
             1 => '気になる',
             2 => '練習中',
             3 => '習得済み',
@@ -44,28 +46,73 @@ class Profile extends Component
         };
     }
 
+    public function timeLabel($createdAt): string
+    {
+        $diffInSeconds = (int) $createdAt->diffInSeconds(now(), true);
+
+        if ($diffInSeconds < 60) {
+            return 'たった今';
+        }
+
+        $diffInMinutes = (int) $createdAt->diffInMinutes(now(), true);
+        if ($diffInMinutes < 60) {
+            return "{$diffInMinutes}分前";
+        }
+
+        $diffInHours = (int) $createdAt->diffInHours(now(), true);
+        if ($diffInHours < 24) {
+            return "{$diffInHours}時間前";
+        }
+
+        $diffInDays = (int) $createdAt->diffInDays(now(), true);
+        if ($diffInDays < 7) {
+            return "{$diffInDays}日前";
+        }
+
+        return $createdAt->format('Y/m/d');
+    }
+
     public function render(): View
     {
         $counts = [
+            0 => $this->user->activity_count,
             1 => $this->user->status1_count,
             2 => $this->user->status2_count,
             3 => $this->user->status3_count,
         ];
 
-        $statuses = Status::query()
-            ->with('song')
-            ->where('user_id', $this->user->id)
-            ->where('state', $this->activeState)
-            ->latest()
-            ->get();
+        $activities = collect();
+        $statuses = collect();
+        $songIds = collect();
+
+        if ($this->activeState === 0) {
+            $activities = Activity::query()
+                ->with('song')
+                ->where('user_id', $this->user->id)
+                ->latest()
+                ->limit(30)
+                ->get();
+
+            $songIds = $activities->pluck('song_id');
+        } else {
+            $statuses = Status::query()
+                ->with('song')
+                ->where('user_id', $this->user->id)
+                ->where('state', $this->activeState)
+                ->latest()
+                ->get();
+
+            $songIds = $statuses->pluck('song_id');
+        }
 
         $viewerStatuses = Status::query()
             ->where('user_id', Auth::id())
-            ->whereIn('song_id', $statuses->pluck('song_id'))
+            ->whereIn('song_id', $songIds)
             ->pluck('state', 'song_id')
             ->toArray();
 
         return view('livewire.user.profile', [
+            'activities' => $activities,
             'counts' => $counts,
             'statuses' => $statuses,
             'viewerStatuses' => $viewerStatuses,
