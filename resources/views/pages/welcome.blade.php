@@ -1,7 +1,7 @@
 @extends('layouts.guest')
 @section('content')
 <section class="bg-white pt-20 pb-16 text-center px-6">
-    <span class="inline-block mb-5 text-xs font-medium tracking-wide text-primary bg-primary-light px-3 py-1 rounded-md">
+    <span class="inline-block mb-5 text-xs font-medium tracking-wide text-primary bg-primary-light px-3 py-1 rounded-sm">
         カラオケ持ち歌管理アプリ
     </span>
     <h1 class="text-4xl font-medium text-gray-900 leading-snug mb-4">
@@ -17,7 +17,7 @@
     </div>
 </section>
 <section class="bg-gray-50 border-t border-gray-200 py-14 px-6">
-    <p class="text-center text-sm font-medium text-gray-500 mb-8">主な機能</p>
+    <p class="text-center text-sm font-medium text-gray-600 mb-8">主な機能</p>
     <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
         @foreach ([
             ['icon' => '♪', 'title' => '持ち歌を管理', 'desc' => '練習中・習得済みなどステータスで曲を整理できます。'],
@@ -25,7 +25,7 @@
             ['icon' => '👥', 'title' => 'フォローして共有', 'desc' => '友達をフォローしてタイムラインで持ち歌を共有しよう。'],
             ['icon' => '♡', 'title' => 'いいねで応援', 'desc' => '新曲を習得したフォロワーにいいねして盛り上げよう。'],
         ] as $feature)
-        <div class="bg-white border border-gray-200 rounded-xl p-5">
+        <div class="bg-white border border-gray-200 rounded-lg p-5">
             <div class="text-2xl mb-3">{{ $feature['icon'] }}</div>
             <h3 class="text-sm font-medium text-gray-900 mb-1.5">{{ $feature['title'] }}</h3>
             <p class="text-xs text-gray-500 leading-relaxed">{{ $feature['desc'] }}</p>

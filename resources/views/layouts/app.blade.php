@@ -7,7 +7,7 @@
     <body class="bg-gray-50 text-gray-900 antialiased min-h-screen flex flex-col">
         @include('layouts.partials.header')
         <main class="flex-1">
-            <div class="max-w-5xl mx-auto px-4 pt-6 pb-24 md:py-6 flex gap-4">
+            <div class="max-w-5xl mx-auto p-2 pb-24 flex gap-2">
                 <aside class="hidden md:block w-64 flex-shrink-0">
                     @include('layouts.partials.sidebar')
                 </aside>
