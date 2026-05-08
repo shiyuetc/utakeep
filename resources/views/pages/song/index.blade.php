@@ -1,7 +1,11 @@
 @extends('layouts.app')
 @section('content')
-<div class="bg-white border border-gray-200 rounded-sm p-4">
-    <h2 class="text-sm font-medium text-gray-900 mb-4">曲を検索</h2>
-    <livewire:song.search-form />
+<div class="bg-white border border-gray-200 rounded-sm overflow-hidden">
+    <div class="px-4 py-2 border-b border-gray-200">
+        <h2 class="text-sm text-gray-900">曲検索</h2>
+    </div>
+    <div class="p-4">
+        <livewire:song.search-form />
+    </div>
 </div>
 @endsection
