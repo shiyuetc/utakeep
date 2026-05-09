@@ -1,10 +1,4 @@
-<div class="bg-white border border-gray-200 rounded-sm overflow-hidden">
-    <div class="px-4 py-2 border-b border-gray-200">
-        <h2 class="flex items-center gap-2 text-sm text-gray-900">
-            <i class="ti ti-search text-base text-primary" aria-hidden="true"></i>曲検索
-        </h2>
-    </div>
-
+<x-section title="曲検索" icon="ti-search">
     <div class="p-4">
         <form wire:submit="search" class="flex gap-2">
             <input
@@ -37,4 +31,4 @@
             <p class="text-sm text-gray-400 text-center py-8">曲が見つかりませんでした。</p>
         @endif
     @endif
-</div>
+</x-section>

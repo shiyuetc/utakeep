@@ -24,12 +24,8 @@
             @endforeach
         </div>
     </div>
-
-    <div class="bg-white border border-gray-200 rounded-sm overflow-hidden">
-        <div class="px-4 py-2 border-b border-gray-200">
-            <h2 class="text-sm text-gray-900">{{ $this->stateLabel($activeState) }}</h2>
-        </div>
-
+    
+    <x-section title="{{ $this->stateLabel($activeState) }}">
         @if ($activeState === 0 && $activities->isNotEmpty())
             <div class="divide-y divide-gray-200">
                 @foreach ($activities as $activity)
@@ -55,5 +51,5 @@
                 <p class="text-sm text-gray-600">まだ{{ $activeState === 0 ? '記録' : $this->stateLabel($activeState).'曲' }}はありません。</p>
             </div>
         @endif
-    </div>
+    </x-section>
 </div>
