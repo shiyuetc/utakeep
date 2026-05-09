@@ -13,7 +13,7 @@
     </div>
     <p class="text-sm text-gray-700 mb-2">
         ステータスを
-        <span class="inline-flex items-center px-2 py-0.5 text-xs border rounded-sm {{ $this->stateBadgeClass($activity->new_state) }}">
+        <span class="inline-flex items-center px-1 py-0.5 text-xs border rounded-sm {{ $this->stateBadgeClass($activity->new_state) }}">
             {{ $this->stateLabel($activity->new_state) }}
         </span>
         に変更しました
