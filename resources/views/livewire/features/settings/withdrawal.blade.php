@@ -1,5 +1,5 @@
 <div class="bg-white border border-red-200 rounded-sm overflow-hidden">
-    <div class="px-4 py-2 border-b border-red-200">
+    <div class="px-4 py-2.5 border-b border-red-200">
         <h2 class="flex items-center gap-2 text-sm text-red-700">
             <i class="ti ti-user-x text-base" aria-hidden="true"></i>
             <span>アカウント削除</span>
