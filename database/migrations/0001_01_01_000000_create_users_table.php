@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('screen_name', 15)->unique();
             $table->string('name', 20);
+            $table->string('description', 255)->nullable();
             $table->integer('activity_count')->default(0);
             $table->integer('status1_count')->default(0);
             $table->integer('status2_count')->default(0);
