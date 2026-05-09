@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Livewire\User;
+namespace App\Livewire\User\Settings;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-class Settings extends Component
+class Profile extends Component
 {
     public string $screenName = '';
     public string $name = '';
@@ -43,6 +43,6 @@ class Settings extends Component
 
     public function render(): View
     {
-        return view('livewire.user.settings');
+        return view('livewire.user.settings.profile');
     }
 }
