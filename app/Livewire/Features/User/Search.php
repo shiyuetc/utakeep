@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\User;
+namespace App\Livewire\Features\User;
 
 use App\Models\User;
 use Illuminate\Contracts\View\View;
@@ -33,7 +33,7 @@ class Search extends Component
                 ->get();
         }
 
-        return view('livewire.user.search', [
+        return view('livewire.features.user.search', [
             'users' => $users,
         ]);
     }

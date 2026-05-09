@@ -1,5 +1,5 @@
 @extends('layouts.app')
 @section('page-title', 'ホーム')
 @section('content')
-<livewire:home.timeline />
+<livewire:features.activity.timeline />
 @endsection

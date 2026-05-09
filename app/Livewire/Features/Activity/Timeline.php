@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Home;
+namespace App\Livewire\Features\Activity;
 
 use App\Models\Activity;
 use App\Models\Status;
@@ -22,7 +22,7 @@ class Timeline extends Component
             ->pluck('state', 'song_id')
             ->toArray();
 
-        return view('livewire.home.timeline', [
+        return view('livewire.features.activity.timeline', [
             'activities' => $activities,
             'statuses' => $statuses,
         ]);

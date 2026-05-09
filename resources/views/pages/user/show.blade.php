@@ -1,5 +1,5 @@
 @extends('layouts.app')
 @section('page-title', $user->name)
 @section('content')
-<livewire:user.profile :user="$user" />
+<livewire:features.user.profile :user="$user" />
 @endsection

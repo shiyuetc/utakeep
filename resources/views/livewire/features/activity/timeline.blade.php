@@ -2,7 +2,7 @@
     @if ($activities->isNotEmpty())
         <div class="divide-y divide-gray-200">
             @foreach ($activities as $activity)
-                <livewire:activity.item
+                <livewire:components.activity.item
                     :activity="$activity"
                     :state="$statuses[$activity->song_id] ?? 0"
                     :key="'timeline-activity-'.$activity->id.'-'.$activity->song_id.'-'.($statuses[$activity->song_id] ?? 0)"

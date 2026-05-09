@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Activity;
+namespace App\Livewire\Components\Activity;
 
 use App\Models\Activity;
 use Illuminate\Contracts\View\View;
@@ -65,6 +65,6 @@ class Item extends Component
 
     public function render(): View
     {
-        return view('livewire.activity.item');
+        return view('livewire.components.activity.item');
     }
 }

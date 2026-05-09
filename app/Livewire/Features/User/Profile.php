@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\User;
+namespace App\Livewire\Features\User;
 
 use App\Models\Activity;
 use App\Models\Status;
@@ -85,7 +85,7 @@ class Profile extends Component
             ->pluck('state', 'song_id')
             ->toArray();
 
-        return view('livewire.user.profile', [
+        return view('livewire.features.user.profile', [
             'activities' => $activities,
             'counts' => $counts,
             'statuses' => $statuses,

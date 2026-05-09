@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\User\Settings;
+namespace App\Livewire\Features\Settings;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
@@ -43,6 +43,6 @@ class Profile extends Component
 
     public function render(): View
     {
-        return view('livewire.user.settings.profile');
+        return view('livewire.features.settings.profile');
     }
 }

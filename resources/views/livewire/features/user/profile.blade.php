@@ -29,7 +29,7 @@
         @if ($activeState === 0 && $activities->isNotEmpty())
             <div class="divide-y divide-gray-200">
                 @foreach ($activities as $activity)
-                    <livewire:activity.item
+                    <livewire:components.activity.item
                         :activity="$activity"
                         :state="$viewerStatuses[$activity->song_id] ?? 0"
                         :key="'user-activity-'.$user->id.'-'.$activity->id.'-'.$activity->song_id.'-'.($viewerStatuses[$activity->song_id] ?? 0)"
@@ -39,7 +39,7 @@
         @elseif ($activeState > 0 && $statuses->isNotEmpty())
             <div class="divide-y divide-gray-200">
                 @foreach ($statuses as $status)
-                    <livewire:song.item
+                    <livewire:components.song.item
                         :song="$status->song"
                         :state="$viewerStatuses[$status->song_id] ?? 0"
                         :key="'user-'.$user->id.'-'.$activeState.'-'.$status->song_id.'-'.($viewerStatuses[$status->song_id] ?? 0)"

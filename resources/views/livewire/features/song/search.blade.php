@@ -20,7 +20,7 @@
             <p class="text-xs text-gray-600 px-4 pb-2">{{ count($songs) }}件ヒットしました</p>
             <div class="border-t border-gray-200 divide-y divide-gray-200">
                 @foreach ($songs as $song)
-                    <livewire:song.item
+                    <livewire:components.song.item
                         :song="$song"
                         :state="$statuses[$song->id] ?? 0"
                         :key="'search-'.$song->id"

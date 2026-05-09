@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Song;
+namespace App\Livewire\Components\Song;
 
 use App\Models\Activity;
 use App\Models\Song;
@@ -96,6 +96,6 @@ class Item extends Component
 
     public function render()
     {
-        return view('livewire.song.item');
+        return view('livewire.components.song.item');
     }
 }

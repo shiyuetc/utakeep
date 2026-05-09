@@ -19,7 +19,7 @@
         に変更しました
     </p>
     <div class="bg-gray-50 border border-gray-200 rounded-sm">
-        <livewire:song.item
+        <livewire:components.song.item
             :song="$activity->song"
             :state="$state"
             :key="'activity-song-'.$activity->id.'-'.$activity->song_id.'-'.$state"

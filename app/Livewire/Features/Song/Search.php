@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Song;
+namespace App\Livewire\Features\Song;
 
 use App\Models\Song;
 use App\Models\Status;
@@ -49,6 +49,6 @@ class Search extends Component
 
     public function render()
     {
-        return view('livewire.song.search');
+        return view('livewire.features.song.search');
     }
 }
