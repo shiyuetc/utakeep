@@ -3,12 +3,28 @@
         <div class="text-lg font-medium tracking-tight text-gray-900">
             <a href="{{ route('home') }}">Uta<span class="text-primary">keep</span></a>
         </div>
-        <div class="flex gap-2">
+        <div class="flex items-center gap-2">
             @auth
-                <form method="POST" action="/logout">
-                    @csrf
-                    <button type="submit" class="px-4 py-1.5 text-sm text-gray-700 cursor-pointer">ログアウト</button>
-                </form>
+                <div class="relative group">
+                    <button type="button" class="rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary/20">
+                        <span class="flex w-9 h-9 rounded-full bg-primary-light text-primary items-center justify-center text-sm font-medium hover:bg-primary hover:text-primary-light transition">
+                            {{ strtoupper(substr(auth()->user()->screen_name, 0, 2)) }}
+                        </span>
+                    </button>
+                    <div class="hidden group-focus-within:block absolute -right-4 mt-2 w-48 bg-white border border-gray-200 rounded-sm shadow-sm overflow-hidden">
+                        <a href="{{ route('users.show', auth()->user()) }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-900 transition">
+                            <i class="ti ti-user text-base" aria-hidden="true"></i>
+                            <span>マイページ</span>
+                        </a>
+                        <form method="POST" action="/logout" class="border-t border-gray-200">
+                            @csrf
+                            <button type="submit" class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-900 transition cursor-pointer">
+                                <i class="ti ti-logout text-base" aria-hidden="true"></i>
+                                <span>ログアウト</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
             @else
                 @if (Request::is('/'))
                     <a href="{{ route('login') }}" class="px-4 py-1.5 text-sm text-gray-700 hover:bg-gray-50 transition">ログイン</a>
