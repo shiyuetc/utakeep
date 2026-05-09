@@ -15,10 +15,23 @@ class Search extends Component
     public array $statuses = [];
     public bool $searched = false;
 
+    public function mount(): void
+    {
+        $this->term = trim((string) request()->query('q', ''));
+
+        if ($this->term !== '') {
+            $this->searchSongs(app(ItunesSearchService::class));
+        }
+    }
+
     public function search(ItunesSearchService $service): void
     {
         $this->validate(['term' => 'required|string|min:1']);
+        $this->searchSongs($service);
+    }
 
+    private function searchSongs(ItunesSearchService $service): void
+    {
         $results = $service->searchSongs($this->term);
 
         foreach ($results as $item) {

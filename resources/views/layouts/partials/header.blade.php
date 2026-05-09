@@ -5,6 +5,20 @@
         </div>
         <div class="flex items-center gap-2">
             @auth
+                <form action="{{ route('songs') }}" method="GET" class="hidden sm:flex items-center">
+                    <label for="header-song-search" class="sr-only">曲検索</label>
+                    <div class="relative">
+                        <i class="ti ti-search absolute left-2.5 top-1/2 -translate-y-1/2 text-sm text-gray-400" aria-hidden="true"></i>
+                        <input
+                            id="header-song-search"
+                            type="search"
+                            name="q"
+                            value="{{ request()->routeIs('songs') ? request('q') : '' }}"
+                            placeholder="曲を検索"
+                            class="w-44 lg:w-56 h-9 pl-8 pr-3 text-sm border border-gray-200 bg-gray-50 text-gray-900 rounded-sm outline-none focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
+                        >
+                    </div>
+                </form>
                 <div class="relative group">
                     <button type="button" class="rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary/20">
                         <span class="flex w-9 h-9 rounded-full bg-primary-light text-primary items-center justify-center text-sm font-medium hover:bg-primary hover:text-primary-light transition">
