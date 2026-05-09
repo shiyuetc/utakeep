@@ -16,6 +16,10 @@
                             <i class="ti ti-user text-base" aria-hidden="true"></i>
                             <span>マイページ</span>
                         </a>
+                        <a href="{{ route('settings') }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-900 transition">
+                            <i class="ti ti-settings text-base" aria-hidden="true"></i>
+                            <span>設定</span>
+                        </a>
                         <form method="POST" action="/logout" class="border-t border-gray-200">
                             @csrf
                             <button type="submit" class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-900 transition cursor-pointer">

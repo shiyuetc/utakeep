@@ -21,3 +21,7 @@ Route::get('/users', function () {
 Route::get('/@{user:screen_name}', function (User $user) {
     return view('pages.user.show', ['user' => $user]);
 })->name('users.show')->middleware('auth');
+
+Route::get('/settings', function () {
+    return view('pages.settings');
+})->name('settings')->middleware('auth');
