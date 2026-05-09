@@ -52,7 +52,7 @@
             </div>
         @else
             <div class="p-8 text-center">
-                <p class="text-sm text-gray-600">{{ $activeState === 0 ? '記録はまだありません。' : $this->stateLabel($activeState).'の曲はまだありません。' }}</p>
+                <p class="text-sm text-gray-600">まだ{{ $activeState === 0 ? '記録' : $this->stateLabel($activeState).'曲' }}はありません。</p>
             </div>
         @endif
     </div>
