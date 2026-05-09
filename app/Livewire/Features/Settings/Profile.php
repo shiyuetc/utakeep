@@ -39,6 +39,7 @@ class Profile extends Component
 
         $user->forceFill($validated)->save();
         $this->saved = true;
+        $this->dispatch('profile-updated');
     }
 
     public function render(): View
