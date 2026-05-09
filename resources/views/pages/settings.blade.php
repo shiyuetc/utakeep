@@ -3,4 +3,5 @@
 @section('content')
 <livewire:features.settings.profile />
 <livewire:features.settings.password />
+<livewire:features.settings.withdrawal />
 @endsection

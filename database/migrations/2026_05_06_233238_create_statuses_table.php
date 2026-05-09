@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('song_id');
             $table->unsignedTinyInteger('state');
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->foreign('song_id')->references('id')->on('songs');
             $table->unique(['user_id', 'song_id']);
         });
@@ -29,7 +29,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('old_state');
             $table->unsignedTinyInteger('new_state');
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->foreign('song_id')->references('id')->on('songs');
         });
     }
