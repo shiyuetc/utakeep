@@ -27,7 +27,7 @@ $colorClass = match($state ?? 0) {
     </div>
     <select
         wire:change="updateState($event.target.value)"
-        class="flex-shrink-0 h-8 px-2 text-xs border rounded-lg outline-none focus:border-primary transition cursor-pointer w-24 {{ $colorClass }}"
+        class="flex-shrink-0 h-8 px-2 text-xs border rounded-sm outline-none focus:border-primary transition cursor-pointer w-24 {{ $colorClass }}"
     >
         <option value="0" {{ ($state ?? 0) == 0 ? 'selected' : '' }}>未設定</option>
         <option value="1" {{ ($state ?? 0) == 1 ? 'selected' : '' }}>気になる</option>
