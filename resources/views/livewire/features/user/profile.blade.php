@@ -10,6 +10,9 @@
                     <div class="text-sm text-gray-400 truncate"><span>@</span>{{ $user->screen_name }}</div>
                 </div>
             </div>
+            @if (filled($user->description))
+                <p class="mt-3 text-sm text-gray-700 whitespace-pre-line break-words">{{ $user->description }}</p>
+            @endif
         </div>
         <div class="grid grid-cols-4 border-t border-gray-200 divide-x divide-gray-200">
             @foreach ([0, 1, 2, 3] as $state)
