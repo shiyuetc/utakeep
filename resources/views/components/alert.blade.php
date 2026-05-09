@@ -33,10 +33,10 @@ $classes = match ($type) {
     <span class="flex-1">{{ $slot }}</span>
 
     @if ($closeable)
-        <button type="button" onclick="this.closest('[data-alert]').hidden = true" class="flex items-center justify-center w-6 h-6 rounded-sm transition cursor-pointer {{ $classes['button'] }}" aria-label="閉じる">
+        <button type="button" onclick="this.closest('[data-alert]').hidden = true" class="flex items-center justify-center w-4 h-4 rounded-sm transition cursor-pointer {{ $classes['button'] }}" aria-label="閉じる">
             <i class="ti ti-x text-base" aria-hidden="true"></i>
         </button>
     @else
-        <div class="w-6 h-6 flex-shrink-0"></div>
+        <div class="w-4 h-4 flex-shrink-0"></div>
     @endif
 </div>
