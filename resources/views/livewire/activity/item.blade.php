@@ -11,7 +11,13 @@
         </a>
         <div class="text-xs text-gray-400 flex-shrink-0">{{ $this->timeLabel($activity->created_at) }}</div>
     </div>
-    <p class="text-sm text-gray-700 mb-2">ステータスを{{ $this->stateLabel($activity->new_state) }}に変更しました</p>
+    <p class="text-sm text-gray-700 mb-2">
+        ステータスを
+        <span class="inline-flex items-center px-2 py-0.5 text-xs border rounded-sm {{ $this->stateBadgeClass($activity->new_state) }}">
+            {{ $this->stateLabel($activity->new_state) }}
+        </span>
+        に変更しました
+    </p>
     <div class="bg-gray-50 border border-gray-200 rounded-sm">
         <livewire:song.item
             :song="$activity->song"
