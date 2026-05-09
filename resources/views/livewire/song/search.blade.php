@@ -1,6 +1,8 @@
 <div class="bg-white border border-gray-200 rounded-sm overflow-hidden">
     <div class="px-4 py-2 border-b border-gray-200">
-        <h2 class="text-sm text-gray-900">曲検索</h2>
+        <h2 class="flex items-center gap-2 text-sm text-gray-900">
+            <i class="ti ti-search text-base text-primary" aria-hidden="true"></i>曲検索
+        </h2>
     </div>
 
     <div class="p-4">
