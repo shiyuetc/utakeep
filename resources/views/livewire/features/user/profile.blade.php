@@ -27,32 +27,17 @@
             @endforeach
         </div>
     </div>
-    
-    <x-section title="{{ $this->stateLabel($activeState) }}">
-        @if ($activeState === 0 && $activities->isNotEmpty())
-            <div class="divide-y divide-gray-200">
-                @foreach ($activities as $activity)
-                    <livewire:components.activity.item
-                        :activity="$activity"
-                        :state="$viewerStatuses[$activity->song_id] ?? 0"
-                        :key="'user-activity-'.$user->id.'-'.$activity->id.'-'.$activity->song_id.'-'.($viewerStatuses[$activity->song_id] ?? 0)"
-                    />
-                @endforeach
-            </div>
-        @elseif ($activeState > 0 && $statuses->isNotEmpty())
-            <div class="divide-y divide-gray-200">
-                @foreach ($statuses as $status)
-                    <livewire:components.song.item
-                        :song="$status->song"
-                        :state="$viewerStatuses[$status->song_id] ?? 0"
-                        :key="'user-'.$user->id.'-'.$activeState.'-'.$status->song_id.'-'.($viewerStatuses[$status->song_id] ?? 0)"
-                    />
-                @endforeach
-            </div>
-        @else
-            <div class="p-8 text-center">
-                <p class="text-sm text-gray-600">まだ{{ $activeState === 0 ? '記録' : $this->stateLabel($activeState).'曲' }}はありません。</p>
-            </div>
-        @endif
-    </x-section>
+
+    @if ($activeState === 0)
+        <livewire:features.user.profile-activities
+            :user="$user"
+            :key="'profile-activities-'.$user->id"
+        />
+    @else
+        <livewire:features.user.profile-songs
+            :user="$user"
+            :state="$activeState"
+            :key="'profile-songs-'.$user->id.'-'.$activeState"
+        />
+    @endif
 </div>
