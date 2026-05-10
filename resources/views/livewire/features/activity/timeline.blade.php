@@ -1,4 +1,4 @@
-<x-section title="みんなの記録" icon="ti-history">
+<x-section title="{{ $title }}" icon="ti-history">
     @if ($activities->isNotEmpty())
         <div class="divide-y divide-gray-200">
             @foreach ($activities as $activity)
@@ -24,7 +24,7 @@
         @endif
     @else
         <div class="p-8 text-center">
-            <p class="text-sm text-gray-600">まだ履歴がありません。</p>
+            <p class="text-sm text-gray-600">まだ記録はありません。</p>
         </div>
     @endif
 </x-section>

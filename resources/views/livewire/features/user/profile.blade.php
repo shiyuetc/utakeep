@@ -29,9 +29,9 @@
     </div>
 
     @if ($activeState === 0)
-        <livewire:features.user.profile-activities
+        <livewire:features.activity.timeline
             :user="$user"
-            :key="'profile-activities-'.$user->id"
+            :key="'profile-timeline-'.$user->id"
         />
     @else
         <livewire:features.user.profile-songs

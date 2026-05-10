@@ -4,6 +4,7 @@ namespace App\Livewire\Features\Activity;
 
 use App\Models\Activity;
 use App\Models\Status;
+use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -14,12 +15,16 @@ class Timeline extends Component
 
     public array $activityIds = [];
 
+    public ?int $userId = null;
+
     public ?int $cursorId = null;
 
     public bool $hasMore = false;
 
-    public function mount(): void
+    public function mount(?User $user = null): void
     {
+        $this->userId = $user?->id;
+
         $this->loadActivity();
     }
 
@@ -52,12 +57,17 @@ class Timeline extends Component
             'activities' => $activities,
             'hasMore' => $this->hasMore,
             'statuses' => $statuses,
+            'title' => $this->userId ? '記録' : 'みんなの記録',
         ]);
     }
 
     private function loadActivity(): void
     {
         $query = Activity::query()->latest('id');
+
+        if ($this->userId) {
+            $query->where('user_id', $this->userId);
+        }
 
         if ($this->cursorId !== null) {
             $query->where('id', '<', $this->cursorId);
