@@ -52,7 +52,7 @@ const initPlayer = (player) => {
 
     player.querySelector('[data-play]')?.remove();
     player.dataset.playerReady = 'true';
-    audio.volume = Number(player.dataset.volume ?? 0.15);
+    audio.volume = Number(player.dataset.volume ?? 0.1);
     audio.preload = 'metadata';
 
     const size = audio.dataset.size || player.dataset.size || 34;
