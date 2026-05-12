@@ -1,4 +1,4 @@
-<x-section title="{{ $this->stateLabel($state) }}">
+<x-section title="{{ $this->stateLabel($state) }}" icon="ti-music">
     @if ($statuses->isNotEmpty())
         <div class="divide-y divide-gray-200">
             @foreach ($statuses as $status)
