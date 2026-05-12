@@ -196,6 +196,7 @@ return [
     */
 
     'attributes' => [
+        'current_password' => '現在のパスワード',
         'description' => '自己紹介',
         'email' => 'メールアドレス',
         'name' => 'ユーザー名',

@@ -24,18 +24,10 @@ class Password extends Component
         $this->saved = false;
         $this->submitted = true;
 
-        $validated = $this->validate(
-            [
-                'current_password' => ['required', 'string', 'current_password:web'],
-                'password' => $this->passwordRules(),
-            ],
-            [
-                'current_password.required' => '現在のパスワードを入力してください。',
-                'current_password.current_password' => '現在のパスワードが正しくありません。',
-                'password.required' => '新しいパスワードを入力してください。',
-                'password.confirmed' => '新しいパスワードと確認用パスワードが一致しません。',
-            ]
-        );
+        $validated = $this->validate([
+            'current_password' => ['required', 'string', 'current_password:web'],
+            'password' => $this->passwordRules(),
+        ]);
 
         Auth::user()->forceFill([
             'password' => Hash::make($validated['password']),
