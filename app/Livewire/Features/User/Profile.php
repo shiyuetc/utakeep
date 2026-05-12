@@ -4,6 +4,7 @@ namespace App\Livewire\Features\User;
 
 use App\Models\User;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -27,6 +28,21 @@ class Profile extends Component
         $this->activeState = $state;
     }
 
+    public function toggleFollow(): void
+    {
+        $viewer = Auth::user();
+
+        if (! $viewer || $viewer->is($this->user)) {
+            return;
+        }
+
+        if ($viewer->isFollowing($this->user)) {
+            $viewer->following()->detach($this->user->id);
+        } else {
+            $viewer->following()->syncWithoutDetaching([$this->user->id]);
+        }
+    }
+
     #[On('status-updated')]
     public function refreshStatuses(): void
     {
@@ -46,6 +62,8 @@ class Profile extends Component
 
     public function render(): View
     {
+        $viewer = Auth::user();
+
         $counts = [
             0 => $this->user->activity_count,
             1 => $this->user->status1_count,
@@ -55,6 +73,11 @@ class Profile extends Component
 
         return view('livewire.features.user.profile', [
             'counts' => $counts,
+            'followersCount' => $this->user->followers()->count(),
+            'followingCount' => $this->user->following()->count(),
+            'isFollowedByViewer' => $viewer ? $this->user->isFollowing($viewer) : false,
+            'isFollowing' => $viewer?->isFollowing($this->user) ?? false,
+            'isOwnProfile' => $viewer?->is($this->user) ?? false,
         ]);
     }
 }

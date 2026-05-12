@@ -1,14 +1,39 @@
 <div class="flex flex-col gap-2">
     <div class="bg-white border border-gray-200 rounded-sm overflow-hidden">
         <div class="p-4">
-            <div class="flex items-center gap-3">
+            <div class="flex items-start gap-3">
                 <div class="w-14 h-14 rounded-full bg-primary-light text-primary flex items-center justify-center text-lg font-medium flex-shrink-0">
                     {{ strtoupper(substr($user->screen_name, 0, 2)) }}
                 </div>
-                <div class="min-w-0">
+                <div class="min-w-0 flex-1">
                     <h1 class="text-base font-medium text-gray-900 truncate">{{ $user->name }}</h1>
-                    <div class="text-sm text-gray-400 truncate"><span>@</span>{{ $user->screen_name }}</div>
+                    <div class="flex items-center gap-2 min-w-0">
+                        <div class="text-sm text-gray-400 truncate"><span>@</span>{{ $user->screen_name }}</div>
+                        @if (! $isOwnProfile && $isFollowedByViewer)
+                            <span class="flex-shrink-0 text-[11px] text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded-sm">フォローされています</span>
+                        @endif
+                    </div>
+                    <div class="flex items-center gap-3 mt-2 text-xs text-gray-500">
+                        <div>
+                            <span class="font-medium text-gray-900">{{ $followingCount }}</span>
+                            <span>フォロー</span>
+                        </div>
+                        <div>
+                            <span class="font-medium text-gray-900">{{ $followersCount }}</span>
+                            <span>フォロワー</span>
+                        </div>
+                    </div>
                 </div>
+                @unless ($isOwnProfile)
+                    <button
+                        type="button"
+                        wire:click="toggleFollow"
+                        wire:loading.attr="disabled"
+                        class="h-8 px-3 text-xs font-medium rounded-sm transition cursor-pointer disabled:cursor-not-allowed disabled:opacity-60 {{ $isFollowing ? 'border border-gray-200 text-gray-700 hover:bg-gray-50' : 'bg-primary text-primary-light hover:bg-primary-hover' }}"
+                    >
+                        {{ $isFollowing ? 'フォロー中' : 'フォロー' }}
+                    </button>
+                @endunless
             </div>
             @if (filled($user->description))
                 <p class="mt-3 text-sm text-gray-700 whitespace-pre-line break-words">{{ $user->description }}</p>
