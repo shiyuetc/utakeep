@@ -25,6 +25,7 @@
                 autocomplete="new-password"
                 class="w-full h-9 px-3 text-sm border border-gray-200 rounded-sm bg-white text-gray-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
                 required
+                minlength="8"
             >
         </div>
 
