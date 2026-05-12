@@ -5,12 +5,11 @@ namespace App\Livewire\Features\Settings;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
 class Withdrawal extends Component
 {
-    public string $deletePassword = '';
+    public string $password = '';
     public bool $submitted = false;
 
     public function deleteAccount(): void
@@ -50,19 +49,11 @@ class Withdrawal extends Component
 
     private function validateDeletePassword(): bool
     {
-        $this->resetErrorBag('deletePassword');
+        $this->resetErrorBag('password');
 
-        $this->validate(
-            ['deletePassword' => ['required', 'string']],
-            ['deletePassword.required' => 'パスワードを入力してください。']
-        );
-
-        $user = Auth::user();
-
-        if (! Hash::check($this->deletePassword, $user->password)) {
-            $this->addError('deletePassword', 'パスワードが正しくありません。');
-            return false;
-        }
+        $this->validate([
+            'password' => ['required', 'string', 'current_password:web'],
+        ]);
 
         return true;
     }

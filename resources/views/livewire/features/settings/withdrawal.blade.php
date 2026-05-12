@@ -8,7 +8,7 @@
 
     <form wire:submit="deleteAccount" class="p-4 space-y-4">
         @if ($submitted)
-            @error('deletePassword')
+            @error('password')
                 <x-alert type="error">{{ $message }}</x-alert>
             @enderror
         @endif
@@ -19,7 +19,7 @@
             <label class="block text-xs font-medium text-gray-600 mb-1">パスワード</label>
             <input
                 type="password"
-                wire:model="deletePassword"
+                wire:model="password"
                 autocomplete="current-password"
                 class="w-full h-9 px-3 text-sm border border-gray-200 rounded-sm bg-white text-gray-900 outline-none focus:border-red-400 focus:ring-2 focus:ring-red-100 transition"
                 required
