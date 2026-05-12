@@ -8,9 +8,16 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\WithoutUrlPagination;
+use Livewire\WithPagination;
 
 class ProfileSongs extends Component
 {
+    use WithoutUrlPagination;
+    use WithPagination;
+
+    private const PER_PAGE = 20;
+
     public User $user;
 
     public int $state;
@@ -25,6 +32,7 @@ class ProfileSongs extends Component
     public function refreshSongs(): void
     {
         $this->user->refresh();
+        $this->resetPage($this->pageName());
     }
 
     public function stateLabel(int $state): string
@@ -44,11 +52,11 @@ class ProfileSongs extends Component
             ->where('user_id', $this->user->id)
             ->where('state', $this->state)
             ->latest()
-            ->get();
+            ->paginate(self::PER_PAGE, ['*'], $this->pageName());
 
         $viewerStatuses = Status::query()
             ->where('user_id', Auth::id())
-            ->whereIn('song_id', $statuses->pluck('song_id'))
+            ->whereIn('song_id', $statuses->getCollection()->pluck('song_id'))
             ->pluck('state', 'song_id')
             ->toArray();
 
@@ -56,5 +64,10 @@ class ProfileSongs extends Component
             'statuses' => $statuses,
             'viewerStatuses' => $viewerStatuses,
         ]);
+    }
+
+    private function pageName(): string
+    {
+        return "songsState{$this->state}Page";
     }
 }
