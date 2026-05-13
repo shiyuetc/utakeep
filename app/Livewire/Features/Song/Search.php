@@ -32,9 +32,19 @@ class Search extends Component
 
     private function searchSongs(ItunesSearchService $service): void
     {
-        $results = $service->searchSongs($this->term);
+        $artistId = preg_match('/^artist_id:(\d+)$/', trim($this->term), $matches)
+            ? $matches[1]
+            : null;
+
+        $results = $artistId === null
+            ? $service->searchSongs($this->term)
+            : $service->searchSongFromArtist($artistId);
 
         foreach ($results as $item) {
+            if (! isset($item['trackId'])) {
+                continue;
+            }
+
             Song::updateOrInsert(
                 ['id' => $item['trackId']],
                 [
@@ -47,9 +57,11 @@ class Search extends Component
             );
         }
 
-        $this->songs = Song::where('title', 'like', "%{$this->term}%")
-            ->orWhere('artist_name', 'like', "%{$this->term}%")
-            ->get();
+        $this->songs = $artistId === null
+            ? Song::where('title', 'like', "%{$this->term}%")
+                ->orWhere('artist_name', 'like', "%{$this->term}%")
+                ->get()
+            : Song::where('artist_id', $artistId)->get();
 
         $songIds = $this->songs->pluck('id')->all();
         $this->statuses = Status::where('user_id', Auth::id())

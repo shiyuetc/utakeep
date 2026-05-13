@@ -23,7 +23,12 @@ $colorClass = match($state ?? 0) {
     </div>
     <div class="flex-1 min-w-0">
         <div class="text-sm font-medium text-gray-900 truncate">{{ $song->title }}</div>
-        <div class="text-xs text-gray-600 truncate mt-0.5">{{ $song->artist_name }}</div>
+        <a
+            href="{{ route('songs', ['q' => 'artist_id:'.$song->artist_id]) }}"
+            class="block text-xs text-gray-600 truncate mt-0.5 hover:text-primary hover:underline"
+        >
+            {{ $song->artist_name }}
+        </a>
     </div>
     <select
         wire:change="updateState($event.target.value)"

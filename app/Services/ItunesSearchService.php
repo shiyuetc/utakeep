@@ -24,4 +24,23 @@ class ItunesSearchService
 
         return $response->json('results') ?? [];
     }
+
+    public function searchSongFromArtist(string $id, int $page = 1): array
+    {
+        $response = Http::get('https://itunes.apple.com/lookup', [
+            'id'       => $id,
+            'media'    => 'music',
+            'entity'   => 'song',
+            'country'  => 'JP',
+            'lang'     => 'ja_jp',
+            'limit'    => 20,
+            'offset'   => ($page - 1) * 20,
+        ]);
+
+        if ($response->failed()) {
+            return [];
+        }
+
+        return $response->json('results') ?? [];
+    }
 }
