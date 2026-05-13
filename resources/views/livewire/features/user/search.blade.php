@@ -26,7 +26,12 @@
                         </div>
                         <div class="flex-1 min-w-0">
                             <div class="text-sm font-medium text-gray-900 truncate">{{ $user->name }}</div>
-                            <div class="text-xs text-gray-400 truncate"><span>@</span>{{ $user->screen_name }}</div>
+                            <div class="flex items-center gap-2 min-w-0">
+                                <div class="text-xs text-gray-400 truncate"><span>@</span>{{ $user->screen_name }}</div>
+                                @if ($user->is_followed_by_viewer ?? false)
+                                    <span class="flex-shrink-0 text-[11px] text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded-sm">フォローされています</span>
+                                @endif
+                            </div>
                         </div>
                         <div class="hidden sm:grid grid-cols-3 gap-3 text-center text-xs text-gray-500 flex-shrink-0">
                             <div>
