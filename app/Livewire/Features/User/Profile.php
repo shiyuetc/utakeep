@@ -14,6 +14,8 @@ class Profile extends Component
 
     public int $activeState = 0;
 
+    public ?string $activeFollowList = null;
+
     public function mount(User $user): void
     {
         $this->user = $user;
@@ -26,6 +28,16 @@ class Profile extends Component
         }
 
         $this->activeState = $state;
+        $this->activeFollowList = null;
+    }
+
+    public function showFollowList(string $type): void
+    {
+        if (! in_array($type, ['following', 'followers'], true)) {
+            return;
+        }
+
+        $this->activeFollowList = $type;
     }
 
     public function toggleFollow(): void

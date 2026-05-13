@@ -14,14 +14,22 @@
                         @endif
                     </div>
                     <div class="flex items-center gap-3 mt-2 text-xs text-gray-500">
-                        <div>
+                        <button
+                            type="button"
+                            wire:click="showFollowList('following')"
+                            class="text-left hover:underline cursor-pointer {{ $activeFollowList === 'following' ? 'text-primary underline' : '' }}"
+                        >
                             <span class="font-medium text-gray-900">{{ $followingCount }}</span>
                             <span>フォロー</span>
-                        </div>
-                        <div>
+                        </button>
+                        <button
+                            type="button"
+                            wire:click="showFollowList('followers')"
+                            class="text-left hover:underline cursor-pointer {{ $activeFollowList === 'followers' ? 'text-primary underline' : '' }}"
+                        >
                             <span class="font-medium text-gray-900">{{ $followersCount }}</span>
                             <span>フォロワー</span>
-                        </div>
+                        </button>
                     </div>
                 </div>
                 @unless ($isOwnProfile)
@@ -44,7 +52,7 @@
                 <button
                     type="button"
                     wire:click="setActiveState({{ $state }})"
-                    class="px-3 py-2 text-center transition cursor-pointer {{ $activeState === $state ? 'bg-primary-light text-primary' : 'text-gray-500 hover:bg-gray-50' }}"
+                    class="px-3 py-2 text-center transition cursor-pointer {{ ! $activeFollowList && $activeState === $state ? 'bg-primary-light text-primary' : 'text-gray-500 hover:bg-gray-50' }}"
                 >
                     <div class="text-xs">{{ $this->stateLabel($state) }}</div>
                     <div class="text-sm font-medium mt-0.5">{{ $counts[$state] ?? 0 }}</div>
@@ -53,7 +61,13 @@
         </div>
     </div>
 
-    @if ($activeState === 0)
+    @if ($activeFollowList)
+        <livewire:features.user.follow-list
+            :user="$user"
+            :type="$activeFollowList"
+            :key="'follow-list-'.$user->id.'-'.$activeFollowList"
+        />
+    @elseif ($activeState === 0)
         <livewire:features.activity.timeline
             :user="$user"
             :key="'profile-timeline-'.$user->id"
