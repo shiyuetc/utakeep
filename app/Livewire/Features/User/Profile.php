@@ -14,7 +14,7 @@ class Profile extends Component
 
     public int $activeState = 0;
 
-    public ?string $activeFollowList = null;
+    public string $activeSection = 'timeline';
 
     public function mount(User $user): void
     {
@@ -28,16 +28,16 @@ class Profile extends Component
         }
 
         $this->activeState = $state;
-        $this->activeFollowList = null;
+        $this->activeSection = $state === 0 ? 'timeline' : 'songs';
     }
 
-    public function showFollowList(string $type): void
+    public function setActiveSection(string $section): void
     {
-        if (! in_array($type, ['following', 'followers'], true)) {
+        if (! in_array($section, ['timeline', 'following', 'followers', 'songs'], true)) {
             return;
         }
 
-        $this->activeFollowList = $type;
+        $this->activeSection = $section;
     }
 
     public function toggleFollow(): void
@@ -76,7 +76,7 @@ class Profile extends Component
     {
         $viewer = Auth::user();
 
-        $counts = [
+        $statusCounts = [
             0 => $this->user->activity_count,
             1 => $this->user->status1_count,
             2 => $this->user->status2_count,
@@ -84,9 +84,9 @@ class Profile extends Component
         ];
 
         return view('livewire.features.user.profile', [
-            'counts' => $counts,
             'followersCount' => $this->user->followers()->count(),
             'followingCount' => $this->user->following()->count(),
+            'statusCounts' => $statusCounts,
             'isFollowedByViewer' => $viewer ? $this->user->isFollowing($viewer) : false,
             'isFollowing' => $viewer?->isFollowing($this->user) ?? false,
             'isOwnProfile' => $viewer?->is($this->user) ?? false,

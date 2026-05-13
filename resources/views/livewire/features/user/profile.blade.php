@@ -16,16 +16,16 @@
                     <div class="flex items-center gap-3 mt-2 text-xs text-gray-500">
                         <button
                             type="button"
-                            wire:click="showFollowList('following')"
-                            class="text-left hover:underline cursor-pointer {{ $activeFollowList === 'following' ? 'text-primary underline' : '' }}"
+                            wire:click="setActiveSection('following')"
+                            class="text-left hover:underline cursor-pointer {{ $activeSection === 'following' ? 'text-primary underline' : '' }}"
                         >
                             <span class="font-medium text-gray-900">{{ $followingCount }}</span>
                             <span>フォロー</span>
                         </button>
                         <button
                             type="button"
-                            wire:click="showFollowList('followers')"
-                            class="text-left hover:underline cursor-pointer {{ $activeFollowList === 'followers' ? 'text-primary underline' : '' }}"
+                            wire:click="setActiveSection('followers')"
+                            class="text-left hover:underline cursor-pointer {{ $activeSection === 'followers' ? 'text-primary underline' : '' }}"
                         >
                             <span class="font-medium text-gray-900">{{ $followersCount }}</span>
                             <span>フォロワー</span>
@@ -52,22 +52,22 @@
                 <button
                     type="button"
                     wire:click="setActiveState({{ $state }})"
-                    class="px-3 py-2 text-center transition cursor-pointer {{ ! $activeFollowList && $activeState === $state ? 'bg-primary-light text-primary' : 'text-gray-500 hover:bg-gray-50' }}"
+                    class="px-3 py-2 text-center transition cursor-pointer {{ in_array($activeSection, ['timeline', 'songs'], true) && $activeState === $state ? 'bg-primary-light text-primary' : 'text-gray-500 hover:bg-gray-50' }}"
                 >
                     <div class="text-xs">{{ $this->stateLabel($state) }}</div>
-                    <div class="text-sm font-medium mt-0.5">{{ $counts[$state] ?? 0 }}</div>
+                    <div class="text-sm font-medium mt-0.5">{{ $statusCounts[$state] ?? 0 }}</div>
                 </button>
             @endforeach
         </div>
     </div>
 
-    @if ($activeFollowList)
+    @if ($activeSection === 'following' || $activeSection === 'followers')
         <livewire:features.user.follow-list
             :user="$user"
-            :type="$activeFollowList"
-            :key="'follow-list-'.$user->id.'-'.$activeFollowList"
+            :type="$activeSection"
+            :key="'follow-list-'.$user->id.'-'.$activeSection"
         />
-    @elseif ($activeState === 0)
+    @elseif ($activeSection === 'timeline')
         <livewire:features.activity.timeline
             :user="$user"
             :key="'profile-timeline-'.$user->id"
