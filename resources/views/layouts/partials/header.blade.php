@@ -13,7 +13,7 @@
                             id="header-song-search"
                             type="search"
                             name="q"
-                            value="{{ request()->routeIs('songs') ? request('q') : '' }}"
+                            value=""
                             placeholder="曲を検索"
                             class="w-44 lg:w-56 h-9 pl-8 pr-3 text-sm border border-gray-200 bg-gray-50 text-gray-900 rounded-sm outline-none focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
                             autocomplete="off"
