@@ -13,6 +13,20 @@
         'xl' => 'w-14 h-14 text-lg',
     };
 
+    $colorClasses = [
+        'bg-primary-light text-primary',
+        'bg-blue-100 text-blue-700',
+        'bg-emerald-100 text-emerald-700',
+        'bg-amber-100 text-amber-700',
+        'bg-rose-100 text-rose-700',
+        'bg-cyan-100 text-cyan-700',
+        'bg-fuchsia-100 text-fuchsia-700',
+        'bg-lime-100 text-lime-700',
+    ];
+
+    $firstLetter = strtolower(substr($user->screen_name, 0, 1));
+    $colorClasses = $colorClasses[ord($firstLetter ?: 'a') % count($colorClasses)];
+
     $hoverClasses = match ($hover) {
         'self' => 'hover:bg-primary hover:text-primary-light transition',
         true => 'group-hover:bg-primary group-hover:text-primary-light transition',
@@ -21,8 +35,9 @@
 @endphp
 
 <div {{ $attributes->class([
-    'rounded-full flex items-center justify-center font-medium flex-shrink-0 bg-primary-light text-primary',
+    'rounded-full flex items-center justify-center font-medium flex-shrink-0',
     $sizeClasses,
+    $colorClasses,
     $hoverClasses,
 ]) }}>
     {{ strtoupper(substr($user->screen_name, 0, 2)) }}
