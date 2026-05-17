@@ -1,7 +1,6 @@
 @props([
     'user',
     'size' => 'md',
-    'hover' => false,
 ])
 
 @php
@@ -26,19 +25,12 @@
 
     $firstLetter = strtolower(substr($user->screen_name, 0, 1));
     $colorClasses = $colorClasses[ord($firstLetter ?: 'a') % count($colorClasses)];
-
-    $hoverClasses = match ($hover) {
-        'self' => 'hover:bg-primary hover:text-primary-light transition',
-        true => 'group-hover:bg-primary group-hover:text-primary-light transition',
-        default => '',
-    };
 @endphp
 
 <div {{ $attributes->class([
     'rounded-full flex items-center justify-center font-medium flex-shrink-0',
     $sizeClasses,
     $colorClasses,
-    $hoverClasses,
 ]) }}>
     {{ strtoupper(substr($user->screen_name, 0, 2)) }}
 </div>
