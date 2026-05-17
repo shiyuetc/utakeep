@@ -1,9 +1,7 @@
 <div class="p-4">
     <div class="flex items-center gap-2.5 mb-2">
         <a href="{{ route('users.show', $activity->user) }}" class="flex items-center gap-2.5 min-w-0 flex-1 group">
-            <div class="w-8 h-8 rounded-full bg-primary-light text-primary flex items-center justify-center text-xs font-medium flex-shrink-0 group-hover:bg-primary group-hover:text-primary-light transition">
-                {{ strtoupper(substr($activity->user->screen_name, 0, 2)) }}
-            </div>
+            <x-user-avatar :user="$activity->user" size="xs" hover />
             <div class="min-w-0">
                 <div class="text-xs font-medium text-gray-900">{{ $activity->user->name }}</div>
                 <div class="text-xs text-gray-400"><span>@</span>{{ $activity->user->screen_name }}</div>

@@ -22,9 +22,7 @@
                 </form>
                 <div class="relative group">
                     <button type="button" class="rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary/20">
-                        <span class="flex w-9 h-9 rounded-full bg-primary-light text-primary items-center justify-center text-sm font-medium hover:bg-primary hover:text-primary-light transition">
-                            {{ strtoupper(substr(auth()->user()->screen_name, 0, 2)) }}
-                        </span>
+                        <x-user-avatar :user="auth()->user()" size="sm" hover="self" />
                     </button>
                     <div class="hidden group-focus-within:block absolute -right-4 mt-2 w-48 bg-white border border-gray-200 rounded-sm shadow-sm overflow-hidden">
                         <a href="{{ route('users.show', auth()->user()) }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-900 transition">
