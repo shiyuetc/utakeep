@@ -21,7 +21,7 @@
                     </div>
                 </form>
                 <div class="relative group">
-                    <button type="button" class="rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary/20">
+                    <button type="button" class="rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary/20 cursor-pointer">
                         <x-user-avatar :user="auth()->user()" size="sm" />
                     </button>
                     <div class="hidden group-focus-within:block absolute -right-4 mt-2 w-48 bg-white border border-gray-200 rounded-sm shadow-sm overflow-hidden">
