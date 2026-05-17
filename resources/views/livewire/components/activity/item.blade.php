@@ -3,7 +3,7 @@
         <a href="{{ route('users.show', $activity->user) }}" class="flex items-center gap-2.5 min-w-0 flex-1 group">
             <x-user-avatar :user="$activity->user" size="xs" />
             <div class="min-w-0">
-                <div class="text-xs font-medium text-gray-900">{{ $activity->user->name }}</div>
+                <div class="text-xs font-medium text-gray-900 hover:underline underline-offset-2">{{ $activity->user->name }}</div>
                 <div class="text-xs text-gray-400"><span>@</span>{{ $activity->user->screen_name }}</div>
             </div>
         </a>

@@ -2,7 +2,7 @@
     <div class="flex items-center gap-3">
         <x-user-avatar :user="$user" size="lg" />
         <div class="min-w-0">
-            <div class="text-sm font-medium text-gray-900 truncate">{{ $user->name }}</div>
+            <div class="text-sm font-medium text-gray-900 truncate hover:underline underline-offset-2">{{ $user->name }}</div>
             <div class="text-xs text-gray-400 mt-0.5"><span>@</span>{{ $user->screen_name }}</div>
         </div>
     </div>
