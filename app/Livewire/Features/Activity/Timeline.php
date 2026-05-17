@@ -40,6 +40,9 @@ class Timeline extends Component
     public function render(): View
     {
         $activitiesById = Activity::with(['user', 'song'])
+            ->withExists([
+                'likedBy as is_liked_by_viewer' => fn ($query) => $query->where('users.id', Auth::id()),
+            ])
             ->whereIn('id', $this->activityIds)
             ->get()
             ->keyBy('id');

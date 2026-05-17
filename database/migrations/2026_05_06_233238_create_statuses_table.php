@@ -28,6 +28,7 @@ return new class extends Migration
             $table->unsignedBigInteger('song_id');
             $table->unsignedTinyInteger('old_state');
             $table->unsignedTinyInteger('new_state');
+            $table->unsignedInteger('likes_count')->default(0);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->foreign('song_id')->references('id')->on('songs');

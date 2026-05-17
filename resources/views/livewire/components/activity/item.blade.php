@@ -23,4 +23,18 @@
             :key="'activity-song-'.$activity->id.'-'.$activity->song_id.'-'.$state"
         />
     </div>
+    <div class="mt-2 flex items-center">
+        <button
+            type="button"
+            wire:click="toggleLike"
+            wire:loading.attr="disabled"
+            class="inline-flex items-center justify-center gap-1 rounded-sm text-xs font-medium transition disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer {{ $isLiked ? 'text-rose-600' : 'text-gray-400 hover:text-rose-500' }}"
+            aria-label="{{ $isLiked ? 'いいねを解除' : 'いいね' }}"
+        >
+            <i class="ti {{ $isLiked ? 'ti-heart-filled' : 'ti-heart' }} text-base" aria-hidden="true"></i>
+            @if ($likesCount > 0)
+                <span>{{ $likesCount }}</span>
+            @endif
+        </button>
+    </div>
 </div>
