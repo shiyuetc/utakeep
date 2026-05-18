@@ -12,8 +12,11 @@ use Livewire\Component;
 class Item extends Component
 {
     public Activity $activity;
+
     public int $state = 0;
+
     public bool $isLiked = false;
+
     public int $likesCount = 0;
 
     public function mount(Activity $activity, int $state = 0): void
@@ -49,6 +52,13 @@ class Item extends Component
                 $activity->likedBy()->detach($userId);
                 $activity->likes_count = max(0, $activity->likes_count - 1);
                 $this->isLiked = false;
+
+                UserNotification::query()
+                    ->where('user_id', $activity->user_id)
+                    ->where('actor_id', $userId)
+                    ->where('type', UserNotification::TYPE_ACTIVITY_LIKED)
+                    ->where('activity_id', $activity->id)
+                    ->delete();
             } else {
                 $activity->likedBy()->attach($userId);
                 $activity->likes_count++;
