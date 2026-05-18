@@ -20,6 +20,7 @@
                         >
                     </div>
                 </form>
+                <livewire:components.notification-menu />
                 <div class="relative group">
                     <button type="button" class="rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary/20 cursor-pointer">
                         <x-user-avatar :user="auth()->user()" size="sm" />

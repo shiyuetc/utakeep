@@ -3,6 +3,7 @@
 namespace App\Livewire\Components\Activity;
 
 use App\Models\Activity;
+use App\Models\UserNotification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -52,6 +53,15 @@ class Item extends Component
                 $activity->likedBy()->attach($userId);
                 $activity->likes_count++;
                 $this->isLiked = true;
+
+                if ($activity->user_id !== $userId) {
+                    UserNotification::create([
+                        'user_id' => $activity->user_id,
+                        'actor_id' => $userId,
+                        'type' => UserNotification::TYPE_ACTIVITY_LIKED,
+                        'activity_id' => $activity->id,
+                    ]);
+                }
             }
 
             $activity->save();

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Features\User;
 
+use App\Models\UserNotification;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
@@ -63,7 +64,15 @@ class Profile extends Component
         if ($viewer->isFollowing($this->user)) {
             $viewer->following()->detach($this->user->id);
         } else {
-            $viewer->following()->syncWithoutDetaching([$this->user->id]);
+            $changes = $viewer->following()->syncWithoutDetaching([$this->user->id]);
+
+            if (in_array($this->user->id, $changes['attached'] ?? [], false)) {
+                UserNotification::create([
+                    'user_id' => $this->user->id,
+                    'actor_id' => $viewer->id,
+                    'type' => UserNotification::TYPE_FOLLOWED,
+                ]);
+            }
         }
     }
 
