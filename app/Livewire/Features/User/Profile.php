@@ -2,8 +2,8 @@
 
 namespace App\Livewire\Features\User;
 
-use App\Models\UserNotification;
 use App\Models\User;
+use App\Models\UserNotification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
@@ -63,6 +63,12 @@ class Profile extends Component
 
         if ($viewer->isFollowing($this->user)) {
             $viewer->following()->detach($this->user->id);
+
+            UserNotification::query()
+                ->where('user_id', $this->user->id)
+                ->where('actor_id', $viewer->id)
+                ->where('type', UserNotification::TYPE_FOLLOWED)
+                ->delete();
         } else {
             $changes = $viewer->following()->syncWithoutDetaching([$this->user->id]);
 
@@ -104,6 +110,7 @@ class Profile extends Component
 
         if ($this->activeState > 0) {
             $this->activeSection = 'songs';
+
             return;
         }
 
