@@ -1,22 +1,24 @@
 <x-section title="{{ $title }}" icon="ti-history">
-    <x-slot:actions>
-        <div class="inline-flex overflow-hidden rounded-sm border border-gray-200 text-xs">
-            <button
-                type="button"
-                wire:click="setScope('following')"
-                class="px-2.5 py-1 transition {{ $scope === 'following' ? 'bg-primary-light text-primary' : 'bg-white text-gray-500 hover:bg-gray-50' }}"
-            >
-                フォロー中
-            </button>
-            <button
-                type="button"
-                wire:click="setScope('global')"
-                class="border-l border-gray-200 px-2.5 py-1 transition {{ $scope === 'global' ? 'bg-primary-light text-primary' : 'bg-white text-gray-500 hover:bg-gray-50' }}"
-            >
-                全体
-            </button>
-        </div>
-    </x-slot:actions>
+    @if ($userId === null)
+        <x-slot:actions>
+            <div class="inline-flex overflow-hidden rounded-sm border border-gray-200 text-xs">
+                <button
+                    type="button"
+                    wire:click="setScope('following')"
+                    class="px-2.5 py-1 transition {{ $scope === 'following' ? 'bg-primary-light text-primary' : 'bg-white text-gray-500 hover:bg-gray-50' }}"
+                >
+                    フォロー中
+                </button>
+                <button
+                    type="button"
+                    wire:click="setScope('global')"
+                    class="border-l border-gray-200 px-2.5 py-1 transition {{ $scope === 'global' ? 'bg-primary-light text-primary' : 'bg-white text-gray-500 hover:bg-gray-50' }}"
+                >
+                    全体
+                </button>
+            </div>
+        </x-slot:actions>
+    @endif
 
     @if ($activities->isNotEmpty())
         <div class="divide-y divide-gray-200">
