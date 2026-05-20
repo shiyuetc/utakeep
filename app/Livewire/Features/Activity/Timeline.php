@@ -7,6 +7,7 @@ use App\Models\Status;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 
 class Timeline extends Component
@@ -21,9 +22,26 @@ class Timeline extends Component
 
     public bool $hasMore = false;
 
+    #[Url(as: 'tl', except: 'following')]
+    public string $scope = 'following';
+
     public function mount(?User $user = null): void
     {
         $this->userId = $user?->id;
+        $this->normalizeScope();
+
+        $this->loadActivity();
+    }
+
+    public function setScope(string $scope): void
+    {
+        if ($this->userId !== null || ! in_array($scope, ['following', 'global'], true)) {
+            return;
+        }
+
+        $this->scope = $scope;
+        $this->activityIds = [];
+        $this->cursorId = null;
 
         $this->loadActivity();
     }
@@ -70,6 +88,8 @@ class Timeline extends Component
 
         if ($this->userId) {
             $query->where('user_id', $this->userId);
+        } elseif ($this->scope === 'following') {
+            $query->whereIn('user_id', Auth::user()->following()->pluck('users.id')->push(Auth::id()));
         }
 
         if ($this->cursorId !== null) {
@@ -90,5 +110,12 @@ class Timeline extends Component
         $this->cursorId = $this->activityIds === []
             ? null
             : min($this->activityIds);
+    }
+
+    private function normalizeScope(): void
+    {
+        if ($this->userId !== null || ! in_array($this->scope, ['following', 'global'], true)) {
+            $this->scope = 'following';
+        }
     }
 }
