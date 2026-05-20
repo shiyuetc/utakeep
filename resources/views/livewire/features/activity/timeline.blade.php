@@ -5,14 +5,14 @@
                 <button
                     type="button"
                     wire:click="setScope('following')"
-                    class="px-2.5 py-1 transition {{ $scope === 'following' ? 'bg-primary-light text-primary' : 'bg-white text-gray-500 hover:bg-gray-50' }}"
+                    class="px-2.5 py-1 transition {{ $scope === 'following' ? 'bg-primary-light text-primary' : 'bg-white text-gray-500 hover:bg-gray-50 cursor-pointer' }}"
                 >
                     フォロー中
                 </button>
                 <button
                     type="button"
                     wire:click="setScope('global')"
-                    class="border-l border-gray-200 px-2.5 py-1 transition {{ $scope === 'global' ? 'bg-primary-light text-primary' : 'bg-white text-gray-500 hover:bg-gray-50' }}"
+                    class="border-l border-gray-200 px-2.5 py-1 transition {{ $scope === 'global' ? 'bg-primary-light text-primary' : 'bg-white text-gray-500 hover:bg-gray-50 cursor-pointer' }}"
                 >
                     全体
                 </button>
