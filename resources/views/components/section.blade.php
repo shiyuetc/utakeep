@@ -4,7 +4,7 @@
     'bodyClass' => null,
 ])
 
-<section {{ $attributes->merge(['class' => 'bg-white mb-2 border border-gray-200 rounded-sm overflow-hidden']) }}>
+<section {{ $attributes->merge(['class' => 'bg-white border border-gray-200 rounded-sm overflow-hidden']) }}>
     <div class="flex items-center justify-between px-2 border-b border-gray-200">
         <h2 class="flex min-w-0 items-center gap-2 px-2 py-2.5 text-sm text-gray-900">
             @if ($icon)

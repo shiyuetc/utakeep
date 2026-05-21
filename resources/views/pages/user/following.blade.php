@@ -2,8 +2,9 @@
 @section('page-title', $user->name . '（@' . $user->screen_name . '）さん')
 @section('content')
 <livewire:features.user.profile :user="$user" />
-<livewire:features.activity.timeline
+<livewire:features.user.follow-list
     :user="$user"
-    :key="'profile-timeline-'.$user->id"
+    :type="'following'"
+    :key="'follow-list-'.$user->id.'-following'"
 />
 @endsection

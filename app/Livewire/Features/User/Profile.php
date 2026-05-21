@@ -7,50 +7,23 @@ use App\Models\UserNotification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
-use Livewire\Attributes\Url;
 use Livewire\Component;
 
 class Profile extends Component
 {
     public User $user;
 
-    #[Url(as: 'status', except: 0)]
-    public int|string $activeState = 0;
+    public ?string $activeRouteName = null;
 
-    #[Url(as: 'view', except: 'songs')]
-    public string $activeSection = 'timeline';
+    public ?int $activeStatus = null;
 
     public function mount(User $user): void
     {
         $this->user = $user;
-        $this->normalizeActiveSection();
-    }
-
-    public function setActiveState(int $state): void
-    {
-        if (! in_array($state, [0, 1, 2, 3], true)) {
-            return;
-        }
-
-        $this->activeState = $state;
-        $this->activeSection = $state === 0 ? 'timeline' : 'songs';
-    }
-
-    public function setActiveSection(string $section): void
-    {
-        if (! in_array($section, ['timeline', 'following', 'followers', 'songs'], true)) {
-            return;
-        }
-
-        $this->activeSection = $section;
-
-        if ($section === 'songs' && $this->activeState === 0) {
-            $this->activeState = 1;
-        }
-
-        if ($section !== 'songs') {
-            $this->activeState = 0;
-        }
+        $this->activeRouteName = request()->route()?->getName();
+        $this->activeStatus = $this->activeRouteName === 'users.show.status'
+            ? (int) request()->route('status')
+            : null;
     }
 
     public function toggleFollow(): void
@@ -97,26 +70,6 @@ class Profile extends Component
             3 => '習得済み',
             default => '未設定',
         };
-    }
-
-    private function normalizeActiveSection(): void
-    {
-        if (! in_array($this->activeSection, ['timeline', 'following', 'followers', 'songs'], true)) {
-            $this->activeSection = 'timeline';
-        }
-
-        $activeState = filter_var($this->activeState, FILTER_VALIDATE_INT);
-        $this->activeState = in_array($activeState, [0, 1, 2, 3], true) ? $activeState : 0;
-
-        if ($this->activeState > 0) {
-            $this->activeSection = 'songs';
-
-            return;
-        }
-
-        if ($this->activeSection === 'songs') {
-            $this->activeState = 1;
-        }
     }
 
     public function render(): View

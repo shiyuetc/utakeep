@@ -11,7 +11,7 @@
                 <aside class="hidden md:block w-64 fixed top-[65px]">
                     @include('layouts.partials.sidebar')
                 </aside>
-                <section class="w-full md:ml-66">
+                <section class="w-full md:ml-66 gap-2 flex flex-col">
                     @yield('content')
                 </section>
             </div>
