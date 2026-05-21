@@ -38,7 +38,7 @@
                         <div class="min-w-0 flex-1">
                             <div class="flex items-start gap-2">
                                 <p class="min-w-0 flex-1 text-sm text-gray-900 leading-snug">{{ $this->message($notification) }}</p>
-                                <p class="flex-shrink-0 text-xs text-gray-400">{{ $this->timeLabel($notification) }}</p>
+                                <x-atoms.rel-time-label :datetime="$notification->created_at" />
                             </div>
                         </div>
                     </a>

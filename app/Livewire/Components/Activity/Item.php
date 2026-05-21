@@ -81,32 +81,6 @@ class Item extends Component
         });
     }
 
-    public function timeLabel($createdAt): string
-    {
-        $diffInSeconds = (int) $createdAt->diffInSeconds(now(), true);
-
-        if ($diffInSeconds < 60) {
-            return 'たった今';
-        }
-
-        $diffInMinutes = (int) $createdAt->diffInMinutes(now(), true);
-        if ($diffInMinutes < 60) {
-            return "{$diffInMinutes}分前";
-        }
-
-        $diffInHours = (int) $createdAt->diffInHours(now(), true);
-        if ($diffInHours < 24) {
-            return "{$diffInHours}時間前";
-        }
-
-        $diffInDays = (int) $createdAt->diffInDays(now(), true);
-        if ($diffInDays < 7) {
-            return "{$diffInDays}日前";
-        }
-
-        return $createdAt->format('Y/m/d');
-    }
-
     public function render(): View
     {
         return view('livewire.components.activity.item');

@@ -7,7 +7,7 @@
                 <div class="text-xs text-gray-400"><span>@</span>{{ $activity->user->screen_name }}</div>
             </div>
         </a>
-        <div class="text-xs text-gray-400 flex-shrink-0">{{ $this->timeLabel($activity->created_at) }}</div>
+        <x-atoms.rel-time-label :datetime="$activity->created_at" />
     </div>
     <p class="text-sm text-gray-700 mb-2">
         ステータスを
