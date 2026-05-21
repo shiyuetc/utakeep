@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('page-title', $user->name . '（@' . $user->screen_name . '）さん')
+@section('page-title', $user->name . '（@' . $user->screen_name . '）さんの記録')
 @section('content')
 <livewire:features.user.profile :user="$user" />
 <livewire:features.activity.timeline
