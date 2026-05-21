@@ -21,21 +21,23 @@ Route::middleware(['auth'])->group(function () {
         return view('pages.user.index');
     })->name('users.index');
 
-    Route::get('/@{user:screen_name}', function (User $user) {
-        return view('pages.user.show', ['user' => $user]);
-    })->name('users.show');
+    Route::prefix('/@{user:screen_name}')->group(function () {
+        Route::get('/', function (User $user) {
+            return view('pages.user.show', ['user' => $user]);
+        })->name('users.show');
 
-    Route::get('/@{user:screen_name}/status/{status}', function (User $user, int $status) {
-        return view('pages.user.status', ['user' => $user, 'status' => $status]);
-    })->whereIn('status', ['1', '2', '3'])->name('users.show.status');
+        Route::get('/status/{status}', function (User $user, int $status) {
+            return view('pages.user.status', ['user' => $user, 'status' => $status]);
+        })->whereIn('status', ['1', '2', '3'])->name('users.show.status');
 
-    Route::get('/@{user:screen_name}/following', function (User $user) {
-        return view('pages.user.following', ['user' => $user]);
-    })->name('users.show.following');
+        Route::get('/following', function (User $user) {
+            return view('pages.user.following', ['user' => $user]);
+        })->name('users.show.following');
 
-    Route::get('/@{user:screen_name}/followers', function (User $user) {
-        return view('pages.user.followers', ['user' => $user]);
-    })->name('users.show.followers');
+        Route::get('/followers', function (User $user) {
+            return view('pages.user.followers', ['user' => $user]);
+        })->name('users.show.followers');
+    });
 
     Route::get('/settings', function () {
         return view('pages.settings');
