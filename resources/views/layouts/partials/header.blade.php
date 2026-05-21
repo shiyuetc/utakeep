@@ -23,7 +23,7 @@
                 <livewire:components.notification-menu />
                 <div class="relative group">
                     <button type="button" class="group/avatar relative rounded-full overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-primary/20 cursor-pointer">
-                        <x-user-avatar :user="auth()->user()" size="sm" />
+                        <x-atoms.avatar :user="auth()->user()" size="sm" />
                         <span class="pointer-events-none absolute inset-0 rounded-full bg-black/0 transition group-hover/avatar:bg-black/10" aria-hidden="true"></span>
                     </button>
                     <div class="hidden group-focus-within:block absolute -right-4 mt-2 w-48 bg-white border border-gray-200 rounded-sm shadow-sm overflow-hidden">

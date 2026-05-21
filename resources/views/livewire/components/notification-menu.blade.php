@@ -34,7 +34,7 @@
                         wire:click.prevent="openNotification({{ $notification->id }})"
                         class="flex gap-3 pl-4 pr-2 py-3 transition hover:bg-gray-50 {{ $notification->read_at ? 'bg-white' : 'bg-primary-light/40' }}"
                     >
-                        <x-user-avatar :user="$notification->actor" size="xs" />
+                        <x-atoms.avatar :user="$notification->actor" size="xs" />
                         <div class="min-w-0 flex-1">
                             <div class="flex items-start gap-2">
                                 <p class="min-w-0 flex-1 text-sm text-gray-900 leading-snug">{{ $this->message($notification) }}</p>

@@ -2,7 +2,7 @@
     <div class="bg-white border border-gray-200 rounded-sm overflow-hidden">
         <a href="{{ route('users.show', ['user' => $user->screen_name]) }}" class="p-4 block border-b border-gray-200 hover:bg-gray-50 transition">
             <div class="flex items-center gap-3">
-                <x-user-avatar :user="$user" size="lg" />
+                <x-atoms.avatar :user="$user" size="lg" />
                 <div class="min-w-0">
                     <div class="text-sm font-medium text-gray-900 truncate hover:underline underline-offset-2">{{ $user->name }}</div>
                     <div class="text-xs text-gray-400 mt-0.5"><span>@</span>{{ $user->screen_name }}</div>

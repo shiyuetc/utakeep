@@ -1,7 +1,7 @@
 <div class="p-4">
     <div class="flex items-center gap-2.5 mb-2">
         <a href="{{ route('users.show', $activity->user) }}" class="flex items-center gap-2.5 min-w-0 flex-1 group">
-            <x-user-avatar :user="$activity->user" size="xs" />
+            <x-atoms.avatar :user="$activity->user" size="xs" />
             <div class="min-w-0">
                 <div class="text-xs font-medium text-gray-900 hover:underline underline-offset-2">{{ $activity->user->name }}</div>
                 <div class="text-xs text-gray-400"><span>@</span>{{ $activity->user->screen_name }}</div>
