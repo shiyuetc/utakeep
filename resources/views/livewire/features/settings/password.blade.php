@@ -1,4 +1,4 @@
-<x-section title="パスワード変更" icon="ti-lock">
+<x-ui.section title="パスワード変更" icon="ti-lock">
     <form wire:submit="updatePassword" class="p-4 space-y-4">
         @if ($submitted && $errors->any())
             <x-ui.alert type="error">{{ $errors->first() }}</x-ui.alert>
@@ -46,4 +46,4 @@
             </button>
         </div>
     </form>
-</x-section>
+</x-ui.section>

@@ -1,4 +1,4 @@
-<x-section title="曲検索" icon="ti-search">
+<x-ui.section title="曲検索" icon="ti-search">
     <div class="p-4">
         <form wire:submit="search" class="flex gap-2">
             <input
@@ -31,4 +31,4 @@
             <p class="text-sm text-gray-400 text-center py-8">曲が見つかりませんでした。</p>
         @endif
     @endif
-</x-section>
+</x-ui.section>

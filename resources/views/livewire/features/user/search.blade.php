@@ -1,4 +1,4 @@
-<x-section title="ユーザー検索" icon="ti-users">
+<x-ui.section title="ユーザー検索" icon="ti-users">
     <div class="p-4">
         <form wire:submit="search" class="flex gap-2">
             <input
@@ -52,4 +52,4 @@
             <p class="text-sm text-gray-400 text-center py-8">ユーザーが見つかりませんでした。</p>
         @endif
     @endif
-</x-section>
+</x-ui.section>

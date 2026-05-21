@@ -1,4 +1,4 @@
-<x-section title="プロフィール" icon="ti-settings">
+<x-ui.section title="プロフィール" icon="ti-settings">
     <form wire:submit="updateProfile" class="p-4 space-y-4">
         @if ($submitted && $errors->any())
             <x-ui.alert type="error">{{ $errors->first() }}</x-ui.alert>
@@ -43,4 +43,4 @@
             </button>
         </div>
     </form>
-</x-section>
+</x-ui.section>

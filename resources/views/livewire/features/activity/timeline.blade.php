@@ -1,4 +1,4 @@
-<x-section title="{{ $title }}" icon="ti-history">
+<x-ui.section title="{{ $title }}" icon="ti-history">
     @if ($userId === null)
         <x-slot:actions>
             <div class="inline-flex overflow-hidden rounded-sm border border-gray-200 text-xs">
@@ -48,4 +48,4 @@
             <p class="text-sm text-gray-600">まだ記録はありません。</p>
         </div>
     @endif
-</x-section>
+</x-ui.section>

@@ -1,4 +1,4 @@
-<x-section title="{{ $this->stateLabel($state) }}" icon="ti-music">
+<x-ui.section title="{{ $this->stateLabel($state) }}" icon="ti-music">
     @if ($statuses->count() > 0)
         <div class="divide-y divide-gray-200">
             @foreach ($statuses as $status)
@@ -20,4 +20,4 @@
             <p class="text-sm text-gray-600">まだ{{ $this->stateLabel($state) }}曲はありません。</p>
         </div>
     @endif
-</x-section>
+</x-ui.section>

@@ -1,4 +1,4 @@
-<x-section title="{{ $this->title() }}" icon="ti-users">
+<x-ui.section title="{{ $this->title() }}" icon="ti-users">
     @if ($users->isNotEmpty())
         <div class="divide-y divide-gray-200">
             @foreach ($users as $user)
@@ -28,4 +28,4 @@
     @else
         <p class="text-sm text-gray-400 text-center py-8">{{ $this->emptyMessage() }}</p>
     @endif
-</x-section>
+</x-ui.section>
