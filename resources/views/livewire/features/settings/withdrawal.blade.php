@@ -9,7 +9,7 @@
     <form wire:submit="deleteAccount" class="p-4 space-y-4">
         @if ($submitted)
             @error('password')
-                <x-alert type="error">{{ $message }}</x-alert>
+                <x-ui.alert type="error">{{ $message }}</x-ui.alert>
             @enderror
         @endif
 

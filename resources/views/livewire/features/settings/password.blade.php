@@ -1,9 +1,9 @@
 <x-section title="パスワード変更" icon="ti-lock">
     <form wire:submit="updatePassword" class="p-4 space-y-4">
         @if ($submitted && $errors->any())
-            <x-alert type="error">{{ $errors->first() }}</x-alert>
+            <x-ui.alert type="error">{{ $errors->first() }}</x-ui.alert>
         @elseif ($saved)
-            <x-alert type="success">変更を保存しました。</x-alert>
+            <x-ui.alert type="success">変更を保存しました。</x-ui.alert>
         @endif
 
         <div>
