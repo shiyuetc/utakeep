@@ -61,17 +61,6 @@ class Profile extends Component
         $this->user->refresh();
     }
 
-    public function stateLabel(int $state): string
-    {
-        return match ($state) {
-            0 => '記録',
-            1 => '気になる',
-            2 => '練習中',
-            3 => '習得済み',
-            default => '未設定',
-        };
-    }
-
     public function render(): View
     {
         $viewer = Auth::user();
