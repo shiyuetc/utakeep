@@ -2,6 +2,7 @@
 @section('page-title', '設定')
 @section('content')
 <livewire:features.settings.profile />
+<livewire:features.settings.email />
 <livewire:features.settings.password />
 <livewire:features.settings.withdrawal />
 @endsection
