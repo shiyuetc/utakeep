@@ -12,6 +12,10 @@
                     @include('layouts.partials.sidebar')
                 </aside>
                 <section class="w-full md:ml-66 gap-2 flex flex-col">
+                    @if (request()->boolean('verified'))
+                        <x-ui.alert type="success">メールアドレスの認証が完了しました。</x-ui.alert>
+                    @endif
+
                     @yield('content')
                 </section>
             </div>
