@@ -31,7 +31,9 @@ class FortifyServiceProvider extends ServiceProvider
     {
         Fortify::loginView(fn() => view('pages.auth.login'));
         Fortify::registerView(fn() => view('pages.auth.register'));
-        
+        Fortify::requestPasswordResetLinkView(fn() => view('pages.auth.forgot-password'));
+        Fortify::resetPasswordView(fn(Request $request) => view('pages.auth.reset-password', ['request' => $request]));
+
         Fortify::createUsersUsing(CreateNewUser::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);

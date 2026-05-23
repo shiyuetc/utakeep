@@ -16,6 +16,7 @@
                     name="screen_name"
                     value="{{ old('screen_name') }}"
                     class="w-full h-9 px-3 text-sm border border-gray-200 rounded-sm bg-white text-gray-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
+                    tabindex="1"
                     required
                     maxlength="15">
                 @error('screen_name')
@@ -23,23 +24,27 @@
                 @enderror
             </div>
             <div>
-                <label class="block text-xs font-medium text-gray-600 mb-1">パスワード</label>
+                <div class="flex items-center justify-between mb-1">
+                    <label class="block text-xs font-medium text-gray-600">パスワード</label>
+                    <a href="{{ route('password.request') }}" class="text-xs text-primary hover:underline" tabindex="4">パスワードを忘れた方</a>
+                </div>
                 <input
                     type="password"
                     name="password"
                     class="w-full h-9 px-3 text-sm border border-gray-200 rounded-sm bg-white text-gray-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
+                    tabindex="2"
                     required>
                 @error('password')
                     <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                 @enderror
             </div>
-            <button type="submit" class="w-full h-9 mt-2 bg-primary text-primary-light text-sm font-medium hover:bg-primary-hover rounded-sm transition cursor-pointer">ログイン</button>
+            <button type="submit" class="w-full h-9 mt-2 bg-primary text-primary-light text-sm font-medium hover:bg-primary-hover rounded-sm transition cursor-pointer" tabindex="3">ログイン</button>
         </form>
         <div class="mt-5 text-center text-sm text-gray-600">
             または
         </div>
         <div class="mt-3 text-center text-sm">
-            アカウントをお持ちでない方は <a href="{{ route('register') }}" class="text-primary hover:underline">新規登録</a>
+            アカウントをお持ちでない方は <a href="{{ route('register') }}" class="text-primary hover:underline" tabindex="5">新規登録</a>
         </div>
     </div>
 </div>

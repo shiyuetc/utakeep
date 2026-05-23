@@ -10,6 +10,10 @@ Route::middleware(['web'])->group(function () {
         }
         return view('pages.welcome');
     })->name('home');
+
+    Route::get('/reset-password', function () {
+        return redirect()->route('password.request');
+    })->middleware('guest');
 });
 
 Route::middleware(['auth'])->group(function () {
