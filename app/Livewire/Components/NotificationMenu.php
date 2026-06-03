@@ -26,21 +26,6 @@ class NotificationMenu extends Component
             ->update(['read_at' => now()]);
     }
 
-    public function openNotification(int $notificationId): void
-    {
-        $notification = UserNotification::query()
-            ->with(['actor', 'activity.user'])
-            ->where('user_id', Auth::id())
-            ->whereKey($notificationId)
-            ->firstOrFail();
-
-        if ($notification->read_at === null) {
-            $notification->forceFill(['read_at' => now()])->save();
-        }
-
-        $this->redirect($this->notificationUrl($notification));
-    }
-
     public function message(UserNotification $notification): string
     {
         return match ($notification->type) {
@@ -50,23 +35,10 @@ class NotificationMenu extends Component
         };
     }
 
-    public function notificationUrl(UserNotification $notification): string
-    {
-        if ($notification->type === UserNotification::TYPE_FOLLOWED && $notification->actor) {
-            return route('users.show', $notification->actor);
-        }
-
-        if ($notification->activity?->user) {
-            return route('users.show', $notification->activity->user);
-        }
-
-        return route('home');
-    }
-
     public function render(): View
     {
         $notifications = UserNotification::query()
-            ->with(['actor', 'activity.user', 'activity.song'])
+            ->with('actor')
             ->where('user_id', Auth::id())
             ->latest()
             ->limit(10)

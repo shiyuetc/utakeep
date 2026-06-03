@@ -30,8 +30,7 @@
             <div class="max-h-96 overflow-y-auto divide-y divide-gray-200">
                 @foreach ($notifications as $notification)
                     <a
-                        href="{{ $this->notificationUrl($notification) }}"
-                        wire:click.prevent="openNotification({{ $notification->id }})"
+                        href="{{ $notification->actor ? route('users.show', $notification->actor) : route('home') }}"
                         class="flex gap-3 pl-4 pr-2 py-3 transition hover:bg-gray-50 {{ $notification->read_at ? 'bg-white' : 'bg-primary-light/40' }}"
                     >
                         <x-atoms.avatar :user="$notification->actor" size="xs" />
