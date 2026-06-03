@@ -1,5 +1,5 @@
 <div class="p-4">
-    <div class="flex items-center gap-2.5 mb-2">
+    <div class="flex items-start gap-2.5 mb-2">
         <a href="{{ route('users.show', $activity->user) }}" class="flex items-center gap-2.5 min-w-0 flex-1 group">
             <x-atoms.avatar :user="$activity->user" size="xs" />
             <div class="min-w-0">
