@@ -2,6 +2,7 @@
 Utakeep is a Laravel application for tracking and sharing your karaoke repertoire.
 
 You can organize songs by status, follow other users, and browse karaoke activity in a timeline. Song search is powered by the iTunes Search API.
+![Utakeep screenshot](docs/screenshot.png)
 
 ## Tech Stack
 - PHP 8.2+
