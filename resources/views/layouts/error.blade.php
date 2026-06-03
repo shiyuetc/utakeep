@@ -7,7 +7,7 @@
         <main class="min-h-screen flex items-center justify-center px-6 py-12">
             <section class="w-full max-w-md bg-white border border-gray-200 rounded-sm p-8 text-center">
                 <a class="inline-block text-xl font-medium mb-6">
-                    Uta<span class="text-primary">keep</span>
+                    <x-app-logo />
                 </a>
 
                 <p class="text-lg font-medium tracking-wide text-primary mb-3">@yield('code')</p>

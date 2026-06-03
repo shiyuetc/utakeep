@@ -4,7 +4,7 @@
 <div class="flex justify-center py-8">
     <div class="w-full max-w-md bg-white border border-gray-200 rounded-sm p-8">
         <div class="text-center text-xl font-medium mb-6">
-            Uta<span class="text-primary">keep</span>
+            <x-app-logo />
         </div>
         <h1 class="text-base font-medium text-gray-900 text-center mb-6">- ログイン -</h1>
         <form method="POST" action="{{ route('login') }}" class="space-y-4">
