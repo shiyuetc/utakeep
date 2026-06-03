@@ -28,13 +28,13 @@
         </div>
 
         <div>
-            <label class="block text-xs font-medium text-gray-600 mb-1">自己紹介</label>
-            <textarea
+            <label class="block text-xs font-medium text-gray-600 mb-1">一言コメント</label>
+            <input
+                type="text"
                 wire:model="description"
-                rows="4"
                 maxlength="255"
-                class="w-full px-3 py-2 text-sm border border-gray-200 rounded-sm bg-white text-gray-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition resize-y"
-            ></textarea>
+                class="w-full h-9 px-3 text-sm border border-gray-200 rounded-sm bg-white text-gray-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
+            >
         </div>
 
         <div class="flex items-center gap-3">
