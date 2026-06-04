@@ -9,10 +9,15 @@ use Livewire\Component;
 class Profile extends Component
 {
     public string $screenName = '';
+
     public string $name = '';
+
     public ?string $description = null;
 
+    public bool $isPrivate = false;
+
     public bool $saved = false;
+
     public bool $submitted = false;
 
     public function mount(): void
@@ -22,6 +27,7 @@ class Profile extends Component
         $this->screenName = $user->screen_name;
         $this->name = $user->name;
         $this->description = $user->description;
+        $this->isPrivate = $user->is_private;
     }
 
     public function updateProfile(): void
@@ -36,7 +42,11 @@ class Profile extends Component
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:20'],
             'description' => ['nullable', 'string', 'max:255'],
+            'isPrivate' => ['boolean'],
         ]);
+
+        $validated['is_private'] = $validated['isPrivate'];
+        unset($validated['isPrivate']);
 
         $user->forceFill($validated)->save();
         $this->saved = true;

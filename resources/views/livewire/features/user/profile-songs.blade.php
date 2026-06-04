@@ -1,5 +1,9 @@
 <x-ui.section title="{{ $this->stateLabel($state) }}" icon="ti-music">
-    @if ($statuses->count() > 0)
+    @if (! $canViewLibrary)
+        <div class="p-8 text-center">
+            <p class="text-sm text-gray-600">このユーザーの登録曲は非公開です。</p>
+        </div>
+    @elseif ($statuses->count() > 0)
         <div class="divide-y divide-gray-200">
             @foreach ($statuses as $status)
                 <livewire:components.song.item

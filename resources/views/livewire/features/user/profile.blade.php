@@ -6,8 +6,11 @@
                 <h1 class="text-base font-medium text-gray-900 truncate hover:underline underline-offset-2">{{ $user->name }}</h1>
                 <div class="flex items-center gap-2 min-w-0">
                     <div class="text-sm text-gray-400 truncate"><span>@</span>{{ $user->screen_name }}</div>
+                    @if ($user->is_private)
+                        <span class="flex-shrink-0 text-[10px] text-gray-600 bg-gray-100 px-1.5 py-0.5 rounded-sm">非公開</span>
+                    @endif
                     @if (! $isOwnProfile && $isFollowedByViewer)
-                        <span class="flex-shrink-0 text-[11px] text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded-sm">フォローされています</span>
+                        <span class="flex-shrink-0 text-[10px] text-gray-600 bg-gray-100 px-1.5 py-0.5 rounded-sm">フォローされています</span>
                     @endif
                 </div>
                 <div class="flex items-center gap-3 mt-2 text-xs text-gray-500">

@@ -37,6 +37,18 @@
             >
         </div>
 
+        <label class="flex items-start gap-3 rounded-sm border border-gray-200 bg-white p-3 cursor-pointer">
+            <input
+                type="checkbox"
+                wire:model="isPrivate"
+                class="mt-0.5 h-4 w-4 rounded-sm border-gray-300 text-primary focus:ring-primary"
+            >
+            <span class="min-w-0">
+                <span class="block text-sm font-medium text-gray-900">非公開設定にする</span>
+                <span class="block text-xs text-gray-500 mt-0.5">他ユーザーに記録と登録している曲を表示しません。</span>
+            </span>
+        </label>
+
         <div class="flex items-center gap-3">
             <button type="submit" class="h-9 px-4 bg-primary text-primary-light text-sm font-medium hover:bg-primary-hover rounded-sm transition cursor-pointer">
                 保存

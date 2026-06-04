@@ -57,9 +57,11 @@ class Timeline extends Component
 
     public function render(): View
     {
+        $viewer = Auth::user();
+
         $activitiesById = Activity::with(['user', 'song'])
             ->withExists([
-                'likedBy as is_liked_by_viewer' => fn ($query) => $query->where('users.id', Auth::id()),
+                'likedBy as is_liked_by_viewer' => fn ($query) => $query->where('users.id', $viewer?->id),
             ])
             ->whereIn('id', $this->activityIds)
             ->get()
@@ -69,13 +71,14 @@ class Timeline extends Component
             ->map(fn (int $activityId) => $activitiesById->get($activityId))
             ->filter();
 
-        $statuses = Status::where('user_id', Auth::id())
+        $statuses = Status::where('user_id', $viewer?->id)
             ->whereIn('song_id', $activities->pluck('song_id')->unique())
             ->pluck('state', 'song_id')
             ->toArray();
 
         return view('livewire.features.activity.timeline', [
             'activities' => $activities,
+            'canViewLibrary' => $this->canViewSelectedUser(),
             'hasMore' => $this->hasMore,
             'statuses' => $statuses,
             'title' => $this->userId ? '記録' : 'みんなの記録',
@@ -84,12 +87,28 @@ class Timeline extends Component
 
     private function loadActivity(): void
     {
+        if (! $this->canViewSelectedUser()) {
+            $this->activityIds = [];
+            $this->cursorId = null;
+            $this->hasMore = false;
+
+            return;
+        }
+
         $query = Activity::query()->latest('id');
 
         if ($this->userId) {
             $query->where('user_id', $this->userId);
         } elseif ($this->scope === 'following') {
             $query->whereIn('user_id', Auth::user()->following()->pluck('users.id')->push(Auth::id()));
+        } else {
+            $viewerId = Auth::id();
+
+            $query->whereHas('user', function ($query) use ($viewerId) {
+                $query
+                    ->where('is_private', false)
+                    ->orWhere('id', $viewerId);
+            });
         }
 
         if ($this->cursorId !== null) {
@@ -117,5 +136,16 @@ class Timeline extends Component
         if ($this->userId !== null || ! in_array($this->scope, ['following', 'global'], true)) {
             $this->scope = 'following';
         }
+    }
+
+    private function canViewSelectedUser(): bool
+    {
+        if ($this->userId === null) {
+            return true;
+        }
+
+        $user = User::find($this->userId);
+
+        return $user?->canBeViewedBy(Auth::user()) ?? false;
     }
 }

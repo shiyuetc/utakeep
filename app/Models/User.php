@@ -24,6 +24,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'screen_name',
         'name',
         'description',
+        'is_private',
         'email',
         'password',
     ];
@@ -47,6 +48,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return [
             'email_verified_at' => 'datetime',
+            'is_private' => 'boolean',
             'password' => 'hashed',
         ];
     }
@@ -73,5 +75,18 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->following()
             ->whereKey($user->getKey())
             ->exists();
+    }
+
+    public function canBeViewedBy(?self $viewer): bool
+    {
+        if (! $this->is_private) {
+            return true;
+        }
+
+        if ($viewer === null) {
+            return false;
+        }
+
+        return $viewer->is($this);
     }
 }

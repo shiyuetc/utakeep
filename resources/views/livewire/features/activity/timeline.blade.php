@@ -20,7 +20,11 @@
         </x-slot:actions>
     @endif
 
-    @if ($activities->isNotEmpty())
+    @if (! $canViewLibrary)
+        <div class="p-8 text-center">
+            <p class="text-sm text-gray-600">このユーザーの記録は非公開です。</p>
+        </div>
+    @elseif ($activities->isNotEmpty())
         <div class="divide-y divide-gray-200">
             @foreach ($activities as $activity)
                 <livewire:components.activity.item

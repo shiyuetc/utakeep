@@ -47,22 +47,31 @@ class ProfileSongs extends Component
 
     public function render(): View
     {
-        $statuses = Status::query()
-            ->with('song')
-            ->where('user_id', $this->user->id)
-            ->where('state', $this->state)
-            ->latest()
-            ->paginate(self::PER_PAGE, ['*'], $this->pageName());
+        $viewer = Auth::user();
+        $canViewLibrary = $this->user->canBeViewedBy($viewer);
 
-        $viewerStatuses = Status::query()
-            ->where('user_id', Auth::id())
-            ->whereIn('song_id', $statuses->getCollection()->pluck('song_id'))
-            ->pluck('state', 'song_id')
-            ->toArray();
+        if ($canViewLibrary) {
+            $statuses = Status::query()
+                ->with('song')
+                ->where('user_id', $this->user->id)
+                ->where('state', $this->state)
+                ->latest()
+                ->paginate(self::PER_PAGE, ['*'], $this->pageName());
+
+            $viewerStatuses = Status::query()
+                ->where('user_id', $viewer?->id)
+                ->whereIn('song_id', $statuses->getCollection()->pluck('song_id'))
+                ->pluck('state', 'song_id')
+                ->toArray();
+        } else {
+            $statuses = collect();
+            $viewerStatuses = [];
+        }
 
         return view('livewire.features.user.profile-songs', [
             'statuses' => $statuses,
             'viewerStatuses' => $viewerStatuses,
+            'canViewLibrary' => $canViewLibrary,
         ]);
     }
 

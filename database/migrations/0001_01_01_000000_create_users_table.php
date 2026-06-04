@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('status1_count')->default(0);
             $table->integer('status2_count')->default(0);
             $table->integer('status3_count')->default(0);
+            $table->boolean('is_private')->default(false);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
