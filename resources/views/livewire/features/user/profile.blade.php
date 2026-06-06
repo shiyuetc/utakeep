@@ -3,7 +3,7 @@
         <div class="flex items-start gap-3">
             <x-atoms.avatar :user="$user" size="xl" />
             <div class="min-w-0 flex-1">
-                <h1 class="text-base font-medium text-gray-900 truncate hover:underline underline-offset-2">{{ $user->name }}</h1>
+                <h1 class="text-base font-medium text-gray-900 truncate hover:underline underline-offset-2"><a href="{{ route('users.show', ['user' => $user->screen_name]) }}">{{ $user->name }}</a></h1>
                 <div class="flex items-center gap-2 min-w-0">
                     <div class="text-sm text-gray-400 truncate"><span>@</span>{{ $user->screen_name }}</div>
                     @if ($user->is_private)
