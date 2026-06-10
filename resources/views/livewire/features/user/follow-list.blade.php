@@ -1,5 +1,9 @@
 <x-ui.section title="{{ $this->title() }}" icon="ti-users">
-    @if ($users->isNotEmpty())
+    @if (! $canViewList)
+        <div class="p-8 text-center">
+            <p class="text-sm text-gray-600">{{ $this->privateMessage() }}</p>
+        </div>
+    @elseif ($users->isNotEmpty())
         <div class="divide-y divide-gray-200">
             @foreach ($users as $user)
                 <a href="{{ route('users.show', $user) }}" class="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition">
