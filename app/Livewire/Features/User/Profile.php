@@ -30,7 +30,13 @@ class Profile extends Component
     {
         $viewer = Auth::user();
 
-        if (! $viewer || $viewer->is($this->user)) {
+        if (! $viewer) {
+            $this->redirectRoute('login', navigate: true);
+
+            return;
+        }
+
+        if ($viewer->is($this->user)) {
             return;
         }
 

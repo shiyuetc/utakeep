@@ -14,6 +14,7 @@ use Livewire\Component;
 class Item extends Component
 {
     public Song $song;
+
     public int $state = 0;
 
     public function mount(Song $song, int $state = 0): void
@@ -24,6 +25,14 @@ class Item extends Component
 
     public function updateState($state): void
     {
+        $userId = Auth::id();
+
+        if ($userId === null) {
+            $this->redirectRoute('login', navigate: true);
+
+            return;
+        }
+
         $validated = Validator::make(
             ['state' => $state],
             ['state' => ['required', 'integer', 'in:0,1,2,3']]
@@ -31,13 +40,7 @@ class Item extends Component
 
         $state = (int) $validated['state'];
 
-        [$newState, $changed] = DB::transaction(function () use ($state): array {
-            $userId = Auth::id();
-
-            if (! $userId) {
-                return [$this->state, false];
-            }
-
+        [$newState, $changed] = DB::transaction(function () use ($userId, $state): array {
             $user = User::whereKey($userId)->lockForUpdate()->first();
 
             if (! $user) {
@@ -74,11 +77,11 @@ class Item extends Component
 
             $user->activity_count++;
 
-            if ($oldState > 0 ) {
+            if ($oldState > 0) {
                 $user->{"status{$oldState}_count"}--;
             }
 
-            if ($state > 0 ) {
+            if ($state > 0) {
                 $user->{"status{$state}_count"}++;
             }
 

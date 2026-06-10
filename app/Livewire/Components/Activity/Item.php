@@ -36,6 +36,8 @@ class Item extends Component
         $userId = Auth::id();
 
         if ($userId === null) {
+            $this->redirectRoute('login', navigate: true);
+
             return;
         }
 
