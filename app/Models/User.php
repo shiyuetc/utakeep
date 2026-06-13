@@ -16,6 +16,15 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasFactory, Notifiable;
 
     /**
+     * The model's default values for attributes.
+     *
+     * @var array<string, mixed>
+     */
+    protected $attributes = [
+        'locale' => 'ja',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
@@ -25,6 +34,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'description',
         'is_private',
+        'locale',
         'email',
         'password',
     ];
