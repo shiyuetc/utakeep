@@ -16,6 +16,8 @@ class Profile extends Component
 
     public bool $isPrivate = false;
 
+    public string $locale = 'ja';
+
     public bool $saved = false;
 
     public bool $submitted = false;
@@ -28,6 +30,7 @@ class Profile extends Component
         $this->name = $user->name;
         $this->description = $user->description;
         $this->isPrivate = $user->is_private;
+        $this->locale = $user->locale ?? 'ja';
     }
 
     public function updateProfile(): void
@@ -43,12 +46,14 @@ class Profile extends Component
             'name' => ['required', 'string', 'max:20'],
             'description' => ['nullable', 'string', 'max:255'],
             'isPrivate' => ['boolean'],
+            'locale' => ['required', 'in:ja,en'],
         ]);
 
         $validated['is_private'] = $validated['isPrivate'];
         unset($validated['isPrivate']);
 
         $user->forceFill($validated)->save();
+        app()->setLocale($this->locale);
         $this->saved = true;
         $this->dispatch('profile-updated');
     }

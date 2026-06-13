@@ -49,6 +49,17 @@
             </span>
         </label>
 
+        <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">言語</label>
+            <select
+                wire:model="locale"
+                class="w-full h-9 px-3 text-sm border border-gray-200 rounded-sm bg-white text-gray-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
+            >
+                <option value="ja">日本語</option>
+                <option value="en">English</option>
+            </select>
+        </div>
+
         <div class="flex items-center gap-3">
             <button type="submit" class="h-9 px-4 bg-primary text-primary-light text-sm font-medium hover:bg-primary-hover rounded-sm transition cursor-pointer">
                 保存
